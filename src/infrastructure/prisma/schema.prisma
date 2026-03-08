@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+model Pipeline{
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  webhookKey  String   @unique @map("webhook_key")
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  actions     Action[]
+  subscribers Subscriber[]
+  jobs        Job[]
+
+  @@map("pipelines")
+
+}
+
+
+model Action {
+  id         String   @id @default(uuid())
+
+  pipelineId String   @map("pipeline_id")
+  type       String
+  config     String
+  order      Int      @default(0)
+
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  pipeline   Pipeline @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
+
+  @@index([pipelineId])
+  @@map("actions")
+}
+
+model Subscriber {
+  id         String   @id @default(uuid())
+
+  pipelineId String   @map("pipeline_id")
+  url        String
+  type       String?
+
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  pipeline   Pipeline       @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
+  deliveries JobDelivery[]
+
+  @@index([pipelineId])
+  @@map("subscribers")
+}
+
+
+model Job {
+  id         String   @id @default(uuid())
+
+  pipelineId String   @map("pipeline_id")
+
+  payload    String
+  result     String?
+
+  status     String   @default("pending")
+
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  pipeline   Pipeline       @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
+  deliveries JobDelivery[]
+
+  @@index([pipelineId])
+  @@index([status])
+  @@map("jobs")
+}
+
+model JobDelivery {
+  id             String   @id @default(uuid())
+
+  jobId          String   @map("job_id")
+  subscriberId   String   @map("subscriber_id")
+
+  status         String   @default("pending")
+  attemptCount   Int      @default(0) @map("attempt_count")
+
+  lastAttempt    DateTime? @map("last_attempt")
+  responseStatus Int?     @map("response_status")
+  responseBody   String?  @map("response_body")
+
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  job        Job        @relation(fields: [jobId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([jobId])
+  @@index([subscriberId])
+  @@map("job_deliveries")
+}
+
+
+
