@@ -9,9 +9,12 @@
     "dev": "tsx watch src/server.ts",
     "worker": "tsx src/worker.ts",
     "worker:dev": "tsx watch src/worker.ts",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:push": "prisma db push"
+    "prisma:generate": "prisma generate --schema=src/infrastructure/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=src/infrastructure/prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=src/infrastructure/prisma/schema.prisma",
+    "db:studio": "prisma studio --schema=src/infrastructure/prisma/schema.prisma",
+    "db:reset": "prisma migrate reset --schema=src/infrastructure/prisma/schema.prisma",
+    "db:deploy": "prisma migrate deploy --schema=src/infrastructure/prisma/schema.prisma"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   "homepage": "https://github.com/muhammadqzaih/event-processing-pipeline#readme",
   "description": "",
   "dependencies": {
+    "@prisma/adapter-mssql": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "bcryptjs": "^3.0.3",
     "bullmq": "^5.70.4",
@@ -37,6 +41,8 @@
     "ioredis": "^5.10.0",
     "jsonwebtoken": "^9.0.3",
     "reflect-metadata": "^0.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "tsyringe": "^4.10.0",
     "uuid": "^13.0.0"
   },
@@ -46,6 +52,8 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.3.5",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@types/uuid": "^10.0.0",
     "nodemon": "^3.1.14",
     "prisma": "^7.4.2",
