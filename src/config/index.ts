@@ -23,4 +23,8 @@ export const config = {
     maxRetryAttempts: parseInt(process.env.MAX_RETRY_ATTEMPTS || '5', 10),
     retryDelayMs: parseInt(process.env.RETRY_DELAY_MS || '60000', 10),
   },
+  servers: {
+    url: `http://localhost:${process.env.PORT || 4000}`,
+  },
+
 } as const;
