@@ -30,4 +30,35 @@
  *       201:
  *         description: Pipeline created
  */
+
+/**
+ * @swagger
+ * /api/pipelines:
+ *   get:
+ *     summary: Get all pipelines
+ *     tags: [Pipelines]
+ *     responses:
+ *       200:
+ *         description: Pipelines retrieved successfully
+ */
+
+/**
+ * @swagger
+ * /api/pipelines/{id}:
+ *   get:
+ *     summary: Get a pipeline by ID
+ *     tags: [Pipelines]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Pipeline ID
+ *     responses:
+ *       200:
+ *         description: Pipeline retrieved successfully
+ *       404:
+ *         description: Pipeline not found
+ */
 export {}

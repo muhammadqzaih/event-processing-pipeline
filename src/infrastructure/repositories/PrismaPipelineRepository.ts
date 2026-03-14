@@ -23,6 +23,18 @@ export class PrismaPipelineRepository implements IPipelineRepository{
     })
   }
 
+  async findAll(): Promise<Pipeline[]> {
+    return this.prisma.pipeline.findMany({
+      orderBy: { createdAt: "desc" }
+    })
+  }
+
+  async findById(id: string): Promise<Pipeline | null> {
+    return this.prisma.pipeline.findUnique({
+      where: { id }
+    })
+  }
+
   
 
 }

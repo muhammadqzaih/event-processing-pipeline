@@ -9,8 +9,19 @@ export function createPipelineRouter(): Router {
 
   router.post(
     '/',
-    asyncHandlerMiddleware((req, res, next) => controller.create(req, res)),
+    asyncHandlerMiddleware(controller.create),
   );
+
+  router.get(
+    '/',
+    asyncHandlerMiddleware(controller.findAll),
+  );
+
+  router.get(
+    '/:id',
+    asyncHandlerMiddleware(controller.findById),
+  );
+
 
   return router;
 }
