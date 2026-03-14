@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 import { IPipelineService } from '../../application/interfaces/IPipelineService';
 import { TOKENS } from '../../domain/tokens';
@@ -17,7 +16,7 @@ export class PipelineController {
 
   create: TypedHandler<CreatePipelineRequest, PipelineResponse> = async (req, res) => {
     const result = await this.pipelineService.create(req.body);
-    sendCreated(res, result, "Pipeline created");
+    sendCreated(res, result, "Pipeline created successfully");
   };
   
   findAll: TypedHandler<unknown, PipelineResponse[]> = async (req, res) => {

@@ -4,6 +4,7 @@ import { TOKENS } from "../../domain/tokens";
 import { IPipelineService } from "../interfaces/IPipelineService";
 import { PipelineMapper } from "../mappers/barrel";
 import { AppError } from "../../shared/AppError";
+import { Pipeline } from "../../domain/entities/Pipeline";
 
 @injectable()
 export class PipelineService implements IPipelineService {
@@ -17,18 +18,18 @@ export class PipelineService implements IPipelineService {
     return PipelineMapper.toResponse(pipeline)
   }
 
-    async findAll() {
+  async findAll(): Promise<Pipeline[]> {
     const pipelines = await this.pipelineRepository.findAll()
-    return pipelines.map(PipelineMapper.toResponse)
+    return pipelines;
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<Pipeline | null> {
     const pipeline = await this.pipelineRepository.findById(id)
 
     if (!pipeline) {
       throw AppError.notFound("Pipeline not found")
     }
 
-    return PipelineMapper.toResponse(pipeline)
+    return pipeline;
   }
 }
