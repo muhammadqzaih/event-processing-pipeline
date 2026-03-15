@@ -13,3 +13,9 @@ export const sendOk = <T>(res: Response, data: T, message?: string) => {
     .status(HttpStatus.OK)
     .json(ApiResponse.success(data, message))
 }
+
+export const sendNoContent = (res: Response, message?: string) => {
+  return res
+    .status(HttpStatus.NO_CONTENT)
+    .json(ApiResponse.success(null, message))
+}

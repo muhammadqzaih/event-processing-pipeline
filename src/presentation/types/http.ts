@@ -5,10 +5,11 @@ import { ParsedQs } from "qs";
 export type TypedRequest<
   TBody = unknown,
   TParams = ParamsDictionary,
-  TQuery extends ParsedQs = ParsedQs
-> = Request<TParams, unknown, TBody, TQuery>;
+  TQuery extends ParsedQs = ParsedQs,
+  TRes = unknown
+> = Request<TParams, TRes, TBody, TQuery>;
 
-export type TypedResponse<T> = Response<T>;
+export type TypedResponse<TRes = unknown> = Response<TRes>;
 
 export type TypedHandler<
   TBody = unknown,
@@ -16,20 +17,16 @@ export type TypedHandler<
   TQuery extends ParsedQs = ParsedQs,
   TRes = unknown
 > = (
-  req: TypedRequest<TBody, TParams, TQuery>,
+  req: TypedRequest<TBody, TParams, TQuery, TRes>,
   res: TypedResponse<TRes>,
   next: NextFunction
 ) => Promise<void>;
 
-
-
 export type BodyHandler<TBody, TRes> =
   TypedHandler<TBody, {}, {}, TRes>;
 
-
 export type ParamsHandler<TParams, TRes> =
   TypedHandler<unknown, TParams, {}, TRes>;
-
 
 export type QueryHandler<TQuery extends ParsedQs, TRes> =
   TypedHandler<unknown, {}, TQuery, TRes>;

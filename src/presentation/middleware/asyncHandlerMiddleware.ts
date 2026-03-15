@@ -1,20 +1,15 @@
-import { NextFunction, Response } from "express";
-import { ParsedQs } from "qs";
-import { TypedHandler, TypedRequest, TypedResponse } from "../types/http";
+import { RequestHandler, NextFunction, Request, Response } from "express";
+import { TypedHandler } from "../types/http";
 
 export function asyncHandlerMiddleware<
   TBody = unknown,
-  TParams = Record<string, any>,
-  TQuery extends ParsedQs = ParsedQs,
+  TParams extends Record<string, any> = Record<string, any>,
+  TQuery extends Record<string, any> = Record<string, any>,
   TRes = unknown
 >(
   fn: TypedHandler<TBody, TParams, TQuery, TRes>
-) {
-  return (
-    req: TypedRequest<TBody, TParams, TQuery>,
-    res: TypedResponse<TRes>,
-    next: NextFunction
-  ): void => {
-    Promise.resolve(fn(req, res, next)).catch(next);
+): RequestHandler<TParams, TRes, TBody, TQuery> {
+  return (req: Request<TParams, TRes, TBody, TQuery>, res: Response<TRes>, next: NextFunction) => {
+    Promise.resolve(fn(req as any, res as any, next)).catch(next);
   };
 }
