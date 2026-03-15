@@ -60,5 +60,48 @@
  *         description: Pipeline retrieved successfully
  *       404:
  *         description: Pipeline not found
+ *   put:
+ *     summary: Update a pipeline by ID
+ *     tags: [Pipelines]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Pipeline ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Updated Email Pipeline
+ *               description:
+ *                 type: string
+ *                 example: Updated description for this pipeline
+ *     responses:
+ *       200:
+ *         description: Pipeline updated successfully
+ *       404:
+ *         description: Pipeline not found
+ *   delete:
+ *     summary: Delete a pipeline by ID
+ *     tags: [Pipelines]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Pipeline ID
+ *     responses:
+ *       200:
+ *         description: Pipeline deleted successfully
+ *       404:
+ *         description: Pipeline not found
  */
 export {}

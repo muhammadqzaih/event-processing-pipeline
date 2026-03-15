@@ -4,7 +4,7 @@ import { TOKENS } from "../../domain/tokens";
 import { IPipelineService } from "../interfaces/IPipelineService";
 import { AppError } from "../../shared/AppError";
 import { Pipeline } from "../../domain/entities/Pipeline";
-import { CreatePipelineRequest } from "../dtos/PipelineDTOs";
+import { CreatePipelineRequest, UpdatePipelineRequest } from "../dtos/PipelineDTOs";
 
 @injectable()
 export class PipelineService implements IPipelineService {
@@ -31,5 +31,18 @@ export class PipelineService implements IPipelineService {
     }
 
     return pipeline;
+  }
+
+  async update(id: string, data: UpdatePipelineRequest): Promise<Pipeline> {
+    await this.findById(id); 
+    return this.pipelineRepository.update(id, {
+      name: data.name,
+      description: data.description
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.findById(id); 
+    await this.pipelineRepository.delete(id);
   }
 }

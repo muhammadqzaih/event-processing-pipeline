@@ -36,6 +36,11 @@ export class PrismaPipelineRepository implements IPipelineRepository{
     })
   }
 
+  async update(id: string, data: { name?: string; description?: string | null }): Promise<Pipeline> {
+    return this.prisma.pipeline.update({ where: { id }, data });
+  }
   
-
+  async delete(id: string): Promise<void> {
+    await this.prisma.pipeline.delete({ where: { id } });
+  }
 }

@@ -6,22 +6,12 @@ import { asyncHandlerMiddleware } from '../middleware/asyncHandlerMiddleware';
 export function createPipelineRouter(): Router {
   const router = Router();
   const controller = container.resolve(PipelineController);
-
-  router.post(
-    '/',
-    asyncHandlerMiddleware(controller.create),
-  );
-
-  router.get(
-    '/',
-    asyncHandlerMiddleware(controller.findAll),
-  );
-
-  router.get(
-    '/:id',
-    asyncHandlerMiddleware(controller.findById),
-  );
-
+  
+  router.post('/', asyncHandlerMiddleware(controller.create),);
+  router.get('/', asyncHandlerMiddleware(controller.findAll),);
+  router.get('/:id',asyncHandlerMiddleware(controller.findById),);
+  router.put("/:id", asyncHandlerMiddleware(controller.update));
+  router.delete("/:id", asyncHandlerMiddleware(controller.delete));
 
   return router;
 }
