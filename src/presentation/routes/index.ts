@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { createPipelineRouter } from "./pipelines.routes";
 
 export function createRouter():Router{
   const router = Router();
-
-  // APP Routers Here Later
+  
+  router.use("/pipelines", createPipelineRouter())
 
   /**
    * @swagger
@@ -21,6 +22,7 @@ export function createRouter():Router{
       timestamp: new Date().toISOString(),
     });
   });
-  
+
+
   return router;
 }
