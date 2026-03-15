@@ -3,6 +3,11 @@ export interface CreatePipelineRequest {
   description?: string
 }
 
+export interface UpdatePipelineRequest {
+  name?: string
+  description?: string
+}
+
 export interface PipelineResponse {
   id: string
   name: string

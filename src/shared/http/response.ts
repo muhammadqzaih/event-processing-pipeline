@@ -8,8 +8,8 @@ export const sendCreated = <T>(res: Response, data: T, message?: string) => {
     .json(ApiResponse.success(data, message))
 }
 
-export const sendOk = <T>(res: Response, data: T) => {
+export const sendOk = <T>(res: Response, data: T, message?: string) => {
   return res
     .status(HttpStatus.OK)
-    .json(ApiResponse.success(data))
+    .json(ApiResponse.success(data, message))
 }

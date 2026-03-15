@@ -14,13 +14,14 @@ export class PrismaPipelineRepository implements IPipelineRepository{
     private prisma: PrismaClient
   ) {}
 
-  async create(data: { name: string; description?: string }): Promise<Pipeline> {
+  async create(data: { name: string; description: string | null }): Promise<Pipeline> {
     return this.prisma.pipeline.create({
       data: {
-        ...data,
-        webhookKey: uuidv4(),
+        name: data.name,
+        description: data.description,
+        webhookKey: uuidv4()
       }
-    })
+    });
   }
 
   async findAll(): Promise<Pipeline[]> {
