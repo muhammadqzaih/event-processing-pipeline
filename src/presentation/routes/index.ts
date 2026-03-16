@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { createPipelineRouter } from "./pipelines.routes";
+import { createActionRouter } from "./action.routes";
 
 export function createRouter():Router{
   const router = Router();
   
-  router.use("/pipelines", createPipelineRouter())
+  router.use("/pipelines", createPipelineRouter());
+  router.use("/actions", createActionRouter());
 
   /**
    * @swagger

@@ -1,1 +1,2 @@
-export * from "./PrismaPipelineRepository"
+export * from "./PrismaPipelineRepository";
+export * from "./PrismaActionRepository";
