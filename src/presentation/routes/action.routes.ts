@@ -3,12 +3,9 @@ import { container } from "tsyringe";
 import { ActionController } from "../controllers/ActionController";
 import { asyncHandlerMiddleware } from "../middleware/asyncHandlerMiddleware";
 import { validate } from "../middleware/validateMiddleware";
-import {
-	createActionSchema,
-	updateActionSchema,
-	actionIdParamsSchema,
-	pipelineIdParamsSchema,
-} from "../validators/actionValidators";
+import { pipelineIdParamsSchema } from "../validators/pipelineValidators";
+import { actionIdParamsSchema, createActionSchema, updateActionSchema } from "../validators/actionValidators";
+
 
 export function createActionRouter(): Router {
 	const router = Router();

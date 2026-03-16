@@ -28,8 +28,6 @@ export function validate<
       next();
     } catch (err) {
       if (err instanceof ZodError) {
-        // PRO FIX: Instead of .join("; "), we take the first error message only.
-        // This prevents "Invalid Pipeline ID; Config missing" confusion.
         const firstMessage = err.issues.length > 1 
           ? err.issues[1].message 
           : err.issues[0].message;;
