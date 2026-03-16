@@ -21,10 +21,29 @@ export class PrismaSubscriberRepository implements ISubscriberRepository {
     });
   }
 
+  async findById(id: string): Promise<Subscriber | null> {
+    return await this.prisma.subscriber.findUnique({ where: { id } });
+  }
+  
   async findByPipelineId(pipelineId: string): Promise<Subscriber[]> {
     return await this.prisma.subscriber.findMany({
       where: { pipelineId },
       orderBy: { createdAt: "asc" },
     });
+  }
+
+  async update(id: string, data: { url?: string; type?: string }): Promise<Subscriber> {
+    return await this.prisma.subscriber.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.subscriber.delete({ where: { id } });
+  }
+
+  async deleteByPipelineId(pipelineId: string): Promise<void> {
+    await this.prisma.subscriber.deleteMany({ where: { pipelineId } });
   }
 }

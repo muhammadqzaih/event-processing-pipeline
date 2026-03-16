@@ -12,3 +12,8 @@ export interface SubscriberResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface UpdateSubscriberRequest {
+  url?: string;
+  type?: string;
+}

@@ -3,7 +3,7 @@ import { TOKENS } from "../../domain/tokens";
 import { ISubscriberRepository } from "../../domain/repositories/ISubscriberRepository";
 import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
 import { ISubscriberService } from "../interfaces/ISubscriberService";
-import { CreateSubscriberRequest } from "../dtos/SubscriberDTOs";
+import { CreateSubscriberRequest, UpdateSubscriberRequest } from "../dtos/SubscriberDTOs";
 import { Subscriber } from "../../domain/entities/Subscriber";
 import { AppError } from "../../shared/AppError";
 
@@ -31,5 +31,21 @@ export class SubscriberService implements ISubscriberService {
   async findByPipelineId(pipelineId: string): Promise<Subscriber[]> {
     await this.ensurePipelineExists(pipelineId);
     return this.subscriberRepository.findByPipelineId(pipelineId);
+  }
+
+  async update(id: string, data: UpdateSubscriberRequest): Promise<Subscriber> {
+    const existing = await this.subscriberRepository.findById(id);
+    if (!existing) {
+      throw AppError.notFound("Subscriber not found");
+    }
+    return this.subscriberRepository.update(id, data);
+  }
+
+  async delete(id: string): Promise<void> {
+    const existing = await this.subscriberRepository.findById(id);
+    if (!existing) {
+      throw AppError.notFound("Subscriber not found");
+    }
+    await this.subscriberRepository.delete(id);
   }
 }

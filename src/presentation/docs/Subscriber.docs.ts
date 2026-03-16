@@ -63,4 +63,57 @@
  *         description: Pipeline not found
  */
 
+/**
+ * @swagger
+ * /api/subscribers/{id}:
+ *   put:
+ *     summary: Update a subscriber by ID
+ *     tags: [Subscribers]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Subscriber ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               url:
+ *                 type: string
+ *                 format: uri
+ *                 description: Updated webhook URL
+ *                 example: "https://api.example.com/webhooks/updated"
+ *               type:
+ *                 type: string
+ *                 description: Updated subscriber type
+ *                 example: "internal-service"
+ *     responses:
+ *       200:
+ *         description: Subscriber updated successfully
+ *       400:
+ *         description: Invalid input data
+ *       404:
+ *         description: Subscriber not found
+ *   delete:
+ *     summary: Delete a subscriber by ID
+ *     tags: [Subscribers]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Subscriber ID
+ *     responses:
+ *       204:
+ *         description: Subscriber deleted successfully
+ *       404:
+ *         description: Subscriber not found
+ */
+
 export {};
