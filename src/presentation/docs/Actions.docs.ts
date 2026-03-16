@@ -7,7 +7,7 @@
 
 /**
  * @swagger
- * /api/actions:
+ * /actions:
  *   post:
  *     summary: Create a new action for a pipeline
  *     tags: [Actions]
@@ -49,7 +49,7 @@
 
 /**
  * @swagger
- * /api/actions/pipeline/{pipelineId}:
+ * /actions/pipeline/{pipelineId}:
  *   get:
  *     summary: Get all actions for a specific pipeline
  *     tags: [Actions]
@@ -69,7 +69,7 @@
 
 /**
  * @swagger
- * /api/actions/{id}:
+ * /actions/{id}:
  *   put:
  *     summary: Update an action by ID
  *     tags: [Actions]

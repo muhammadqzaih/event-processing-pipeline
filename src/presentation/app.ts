@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { createRouter } from './routes';
 import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from '../config/swagger';
+import { config } from '../config';
+import { createRouter } from './routes';
 
 
 export function createApp(): express.Application {
@@ -20,7 +21,7 @@ export function createApp(): express.Application {
   // Swagger docs
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-  app.use('/api', createRouter());
+  app.use(config.api.basePath, createRouter());
 
   app.use(errorHandlerMiddleware);
 
