@@ -4,6 +4,11 @@ dotenv.config();
 export const config = {
   port: parseInt(process.env.PORT || '3000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
+  api: {
+    prefix: '/api',
+    version: 'v1',
+    basePath: '/api/v1',
+  },
 
   database: {
     url: process.env.DATABASE_URL || '',

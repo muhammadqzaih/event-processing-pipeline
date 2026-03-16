@@ -21,4 +21,22 @@ const options: swaggerJsdoc.Options = {
 ],
 };
 
-export const swaggerSpec = swaggerJsdoc(options);
+const generatedSpec = swaggerJsdoc(options) as {
+  paths?: Record<string, unknown>;
+};
+
+if (generatedSpec.paths) {
+  const prefixedPaths = Object.fromEntries(
+    Object.entries(generatedSpec.paths).map(([path, value]) => {
+      const prefixedPath = path.startsWith(config.api.basePath) || path.startsWith('/api/')
+        ? path
+        : `${config.api.basePath}${path}`;
+
+      return [prefixedPath, value];
+    }),
+  );
+
+  generatedSpec.paths = prefixedPaths;
+}
+
+export const swaggerSpec = generatedSpec;

@@ -7,7 +7,7 @@
 
 /**
  * @swagger
- * /api/pipelines:
+ * /pipelines:
  *   post:
  *     summary: Create a new pipeline
  *     tags: [Pipelines]
@@ -33,7 +33,7 @@
 
 /**
  * @swagger
- * /api/pipelines:
+ * /pipelines:
  *   get:
  *     summary: Get all pipelines
  *     tags: [Pipelines]
@@ -44,7 +44,7 @@
 
 /**
  * @swagger
- * /api/pipelines/{id}:
+ * /pipelines/{id}:
  *   get:
  *     summary: Get a pipeline by ID
  *     tags: [Pipelines]

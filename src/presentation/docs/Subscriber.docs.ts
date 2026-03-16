@@ -7,7 +7,7 @@
 
 /**
  * @swagger
- * /api/subscribers:
+ * /subscribers:
  *   post:
  *     summary: Create a new subscriber for a pipeline
  *     tags: [Subscribers]
@@ -45,7 +45,7 @@
 
 /**
  * @swagger
- * /api/subscribers/pipeline/{pipelineId}:
+ * /subscribers/pipeline/{pipelineId}:
  *   get:
  *     summary: Get all subscribers for a specific pipeline
  *     tags: [Subscribers]
@@ -65,7 +65,7 @@
 
 /**
  * @swagger
- * /api/subscribers/{id}:
+ * /subscribers/{id}:
  *   put:
  *     summary: Update a subscriber by ID
  *     tags: [Subscribers]
