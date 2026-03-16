@@ -8,6 +8,15 @@ export function errorHandlerMiddleware(
   _next: NextFunction
 ): void {
 
+  if (err instanceof SyntaxError && 'body' in err) {
+    res.status(400).json({
+      success: false,
+      message: 'Invalid JSON payload'
+    });
+
+    return;
+  }
+  
   if(err instanceof AppError){
     res.status(err.statusCode).json({
       success:false,

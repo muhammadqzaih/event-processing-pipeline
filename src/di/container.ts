@@ -6,6 +6,8 @@ import { PrismaPipelineRepository } from "../infrastructure/repositories/PrismaP
 import { PrismaActionRepository } from "../infrastructure/repositories/PrismaActionRepository";
 import { PipelineService } from "../application/services/PipelineService";
 import { ActionService } from "../application/services/ActionService";
+import { SubscriberService } from "../application/services/SubscriberService";
+import { PrismaSubscriberRepository } from "../infrastructure/repositories/PrismaSubscriberRepository";
 
 export function registerDependencies(): void {
   // PrismaClient (singleton)
@@ -20,10 +22,15 @@ export function registerDependencies(): void {
 
   container.register(TOKENS.ActionRepository,
     { useClass: PrismaActionRepository })
-
+    
+  container.register(TOKENS.SubscriberRepository,
+    { useClass: PrismaSubscriberRepository })
 
   
   // Application Services
+  container.register(TOKENS.SubscriberService,
+    { useClass: SubscriberService })
+
   container.register(TOKENS.PipelineService,
     { useClass: PipelineService })
 
