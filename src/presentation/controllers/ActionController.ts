@@ -23,5 +23,15 @@ export class ActionController {
 		const response = actions.map((a) => ActionMapper.toResponse(a));
 		sendOk(res, response, "Actions retrieved successfully");
 	};
+
+  update: ParamsBodyHandler<UpdateActionRequest, { id: string }, ActionResponse> = async (req, res) => {
+		const updated = await this.actionService.update(req.params.id, req.body);
+		sendOk(res, ActionMapper.toResponse(updated), "Action updated successfully");
+	};
+
+	delete: ParamsHandler<{ id: string }, void> = async (req, res) => {
+		await this.actionService.delete(req.params.id);
+		sendNoContent(res);
+	};
 }
 

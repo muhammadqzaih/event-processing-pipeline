@@ -26,6 +26,18 @@ export function createActionRouter(): Router {
 		asyncHandlerMiddleware(controller.findByPipelineId),
 	);
 
+  router.put(
+		"/:id",
+		validate({ body: updateActionSchema, params: actionIdParamsSchema }),
+		asyncHandlerMiddleware(controller.update),
+	);
+
+	router.delete(
+		"/:id",
+		validate({ params: actionIdParamsSchema }),
+		asyncHandlerMiddleware(controller.delete),
+	);
+  
 	return router;
 }
 

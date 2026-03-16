@@ -61,5 +61,33 @@ export class PrismaActionRepository implements IActionRepository {
     const action = await this.prisma.action.findUnique({ where: { id } });
     return action ? this.toDomain(action) : null;
   }
+
+  async update(
+    id: string,
+    data: {
+      type?: string;
+      config?: Record<string, unknown>;
+      order?: number;
+    },
+  ): Promise<Action> {
+    const updated = await this.prisma.action.update({
+      where: { id },
+      data: {
+        type: data.type,
+        config: data.config !== undefined ? JSON.stringify(data.config) : undefined,
+        order: data.order,
+      },
+    });
+
+    return this.toDomain(updated);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.action.delete({ where: { id } });
+  }
+
+  async deleteByPipelineId(pipelineId: string): Promise<void> {
+    await this.prisma.action.deleteMany({ where: { pipelineId } });
+  }
   
 }
