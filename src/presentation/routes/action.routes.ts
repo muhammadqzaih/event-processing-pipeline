@@ -6,8 +6,8 @@ import { validate } from "../middleware/validateMiddleware";
 import {
 	actionIdParamsSchema,
 	createActionSchema,
-	pipelineIdParamsSchema,
 	updateActionSchema,
+  pipelineIdParamsSchema
 } from "../validators/actionValidators";
 
 

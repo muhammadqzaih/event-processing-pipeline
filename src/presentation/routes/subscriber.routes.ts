@@ -6,6 +6,7 @@ import { validate } from "../middleware/validateMiddleware";
 import {
   createSubscriberSchema,
   pipelineIdParamsSchema,
+  subscriberIdParamsSchema,
   updateSubscriberSchema,
 } from "../validators/subscriberValidation";
 
@@ -27,12 +28,13 @@ export function createSubscriberRouter(): Router {
   
   router.patch(
     "/:id",
-    validate({ body: updateSubscriberSchema }),
+    validate({ body: updateSubscriberSchema, params: subscriberIdParamsSchema }),
     asyncHandlerMiddleware(controller.update),
   );
 
   router.delete(
     "/:id",
+    validate({ params: subscriberIdParamsSchema }),
     asyncHandlerMiddleware(controller.delete)
   );
   
