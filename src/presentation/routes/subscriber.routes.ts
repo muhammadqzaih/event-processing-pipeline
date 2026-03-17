@@ -25,7 +25,7 @@ export function createSubscriberRouter(): Router {
     asyncHandlerMiddleware(controller.findByPipelineId),
   );
   
-  router.put(
+  router.patch(
     "/:id",
     validate({ body: updateSubscriberSchema }),
     asyncHandlerMiddleware(controller.update),

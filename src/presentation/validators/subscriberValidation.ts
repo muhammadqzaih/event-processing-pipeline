@@ -24,8 +24,10 @@ export const createSubscriberSchema = z.object({
 });
 
 export const updateSubscriberSchema = z.object({
-  url:  z.string({ message: "URL is required" })
-    .url({ message: "Invalid URL format" }),
+  url:  z.string()
+    .trim()
+    .url({ message: "Invalid URL format" })
+    .optional(),
   type: z.string().optional(),
 }).refine((data) => Object.keys(data).length > 0, {
   message: "At least one field must be provided for update",
