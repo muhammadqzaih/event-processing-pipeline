@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const VALIDATION_MESSAGES = {
   REQUIRED: (field: string) => `${field} is required and cannot be empty`,
-  INVALID_UUID: (field: string) => `Invalid ${field} format (UUID expected)`,
+  INVALID_UUID: (field: string) => `${field} not found`,
   MIN_ONE_FIELD: "At least one field must be provided for update",
 };
 
