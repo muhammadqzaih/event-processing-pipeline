@@ -1,19 +1,9 @@
+
 import { z } from "zod";
+import { atLeastOneField, uuidSchema, VALIDATION_MESSAGES } from "./common";
 
 const ActionTypeEnum = z.enum(["transform", "filter", "enrich"], {
-  message: "Type must be 'transform', 'filter', or 'enrich'"
-});
-
-
-const uuidSchema = (fieldName: string) =>
-  z.string({ message: `${fieldName} is required` })
-    .trim()
-    .min(1, { message: `${fieldName} is required` }) 
-    .uuid({ message: `Invalid ${fieldName} format (UUID expected)` });
-
-
-export const actionIdParamsSchema = z.object({
-  id: uuidSchema("Action ID"),
+  message: "Type is required and must be one of: 'transform', 'filter', or 'enrich'"
 });
 
 
@@ -21,23 +11,25 @@ export const pipelineIdParamsSchema = z.object({
   pipelineId: uuidSchema("Pipeline ID"),
 });
 
+export const actionIdParamsSchema = z.object({
+  id: uuidSchema("Action ID"),
+});
 
 export const createActionSchema = z.object({
-  config: z.record(z.string(), z.unknown(), { 
-    message: "Configuration object is required" 
-  }).refine((obj) => obj && Object.keys(obj).length > 0, {
-    message: "Configuration object is required",
-  }),
   pipelineId: uuidSchema("Pipeline ID"),
-  type: ActionTypeEnum,
-  order: z.number().int().nonnegative().optional().default(0),
+  
+  type: ActionTypeEnum, 
+
+  order: z.number({
+    error: "Order must be a number and is required"
+  }).int().nonnegative(),
+
+  config: z.record(z.string(), z.unknown(), {
+    error: VALIDATION_MESSAGES.REQUIRED("Config")
+  }).refine(atLeastOneField, { message: "Configuration object cannot be empty" }),
 });
 
-
-export const updateActionSchema = z.object({
-  type: ActionTypeEnum.optional(),
-  config: z.record(z.string(), z.unknown()).optional(),
-  order: z.number().int().nonnegative().optional(),
-}).refine((data) => Object.keys(data).length > 0, {
-  message: "At least one field must be provided for update",
-});
+export const updateActionSchema = createActionSchema
+  .omit({ pipelineId: true }) 
+  .partial()
+  .refine(atLeastOneField, { message: VALIDATION_MESSAGES.MIN_ONE_FIELD });

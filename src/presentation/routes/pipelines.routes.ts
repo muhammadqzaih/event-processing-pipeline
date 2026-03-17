@@ -27,7 +27,7 @@ export function createPipelineRouter(): Router {
     asyncHandlerMiddleware(controller.findById),
   );
 
-  router.put(
+  router.patch(
     '/:id',
     validate({ body: updatePipelineSchema, params: pipelineIdParamsSchema }),
     asyncHandlerMiddleware(controller.update),

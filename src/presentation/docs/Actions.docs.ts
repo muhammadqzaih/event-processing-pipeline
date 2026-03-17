@@ -70,7 +70,7 @@
 /**
  * @swagger
  * /actions/{id}:
- *   put:
+*   patch:
  *     summary: Update an action by ID
  *     tags: [Actions]
  *     parameters:

@@ -6,8 +6,8 @@ import { validate } from "../middleware/validateMiddleware";
 import {
 	actionIdParamsSchema,
 	createActionSchema,
-	pipelineIdParamsSchema,
 	updateActionSchema,
+  pipelineIdParamsSchema
 } from "../validators/actionValidators";
 
 
@@ -27,7 +27,7 @@ export function createActionRouter(): Router {
 		asyncHandlerMiddleware(controller.findByPipelineId),
 	);
 
-  router.put(
+	router.patch(
 		"/:id",
 		validate({ body: updateActionSchema, params: actionIdParamsSchema }),
 		asyncHandlerMiddleware(controller.update),
