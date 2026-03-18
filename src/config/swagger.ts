@@ -1,5 +1,9 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
 import { config } from '.';
+
+const docsGlob = path.resolve(__dirname, '../presentation/docs/*.ts');
+const routesGlob = path.resolve(__dirname, '../presentation/routes/*.ts');
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -16,9 +20,9 @@ const options: swaggerJsdoc.Options = {
     ],
   },
   apis: [
-  "./src/presentation/routes/*.ts",
-  "./src/presentation/docs/*.ts"
-],
+    routesGlob,
+    docsGlob,
+  ],
 };
 
 const generatedSpec = swaggerJsdoc(options) as {
