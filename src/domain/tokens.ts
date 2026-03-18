@@ -11,6 +11,7 @@ export const TOKENS = {
   //Application Services
   PipelineService: Symbol.for('IPipelineService'),
   ActionService: Symbol.for('IActionService'),
+  JobService: Symbol.for("IJobService"),
   SubscriberService: Symbol.for("ISubscriberService"),
   WebhookService: Symbol.for("IWebhookService"),
 

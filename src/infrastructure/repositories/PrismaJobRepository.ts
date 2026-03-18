@@ -3,6 +3,7 @@ import {PrismaClient } from "@prisma/client";
 import { IJobRepository } from "../../domain/repositories/IJobRepository";
 import { TOKENS } from "../../domain/tokens";
 import { Job, JobStatus } from "../../domain/entities/Job";
+import { DeliveryStatus, JobDelivery } from "../../domain/entities/JobDelivery";
 
 type PrismaJobRecord = {
   id: string;
@@ -14,6 +15,20 @@ type PrismaJobRecord = {
   updatedAt: Date;
 };
 
+  type PrismaJobWithDeliveriesRecord = PrismaJobRecord & {
+    deliveries: Array<{
+      id: string;
+      jobId: string;
+      subscriberId: string;
+      status: string;
+      attemptCount: number;
+      lastAttempt: Date | null;
+      responseStatus: number | null;
+      responseBody: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+    }>;
+  };
 
 @injectable()
 export class PrismaJobRepository implements IJobRepository {
@@ -54,4 +69,79 @@ export class PrismaJobRepository implements IJobRepository {
     };
   }
 
+  async findByPipelineId(pipelineId: string): Promise<Job[]> {
+    const records = await this.prisma.job.findMany({
+      where: { pipelineId },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return records.map((record) => this.toDomain(record));
+  }
+
+  async findById(id: string): Promise<Job | null> {
+    const record = await this.prisma.job.findUnique({ where: { id } });
+    return record ? this.toDomain(record) : null;
+  }
+  
+  private parseJson(value: string | null): Record<string, unknown> | null {
+    if (!value) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(value) as Record<string, unknown>;
+    } catch {
+      return null;
+    }
+  }
+  
+
+  async findByIdWithDeliveries(id: string): Promise<(Job & { deliveries: JobDelivery[] }) | null> {
+    const record = await this.prisma.job.findUnique({
+      where: { id },
+      include: {
+        deliveries: {
+          orderBy: { createdAt: "asc" },
+        },
+      },
+    });
+
+    if (!record) {
+      return null;
+    }
+
+    const typedRecord = record as PrismaJobWithDeliveriesRecord;
+
+    return {
+      ...this.toDomain(typedRecord),
+      deliveries: typedRecord.deliveries.map((delivery) => this.toDeliveryDomain(delivery)),
+    };
+  }
+
+    private toDomain(record: PrismaJobRecord): Job {
+    return {
+      id: record.id,
+      pipelineId: record.pipelineId,
+      payload: this.parseJson(record.payload) ?? {},
+      result: this.parseJson(record.result),
+      status: record.status as JobStatus,
+      createdAt: record.createdAt,
+      updatedAt: record.updatedAt,
+    };
+  }
+
+  private toDeliveryDomain(record: PrismaJobWithDeliveriesRecord["deliveries"][number]): JobDelivery {
+    return {
+      id: record.id,
+      jobId: record.jobId,
+      subscriberId: record.subscriberId,
+      status: record.status as DeliveryStatus,
+      attemptCount: record.attemptCount,
+      lastAttempt: record.lastAttempt,
+      responseStatus: record.responseStatus,
+      responseBody: record.responseBody,
+      createdAt: record.createdAt,
+      updatedAt: record.updatedAt,
+    };
+  }
 }

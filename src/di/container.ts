@@ -12,6 +12,7 @@ import { PrismaJobRepository } from "../infrastructure/repositories/PrismaJobRep
 
 import { WebhookService } from "../application/services/WebhookService";
 import { BullMQQueueService } from "../infrastructure/services/BullMQQueueService";
+import { JobService } from "../application/services/jopService";
 
 export function registerDependencies(): void {
   // PrismaClient (singleton)
@@ -45,6 +46,9 @@ export function registerDependencies(): void {
   container.register(TOKENS.WebhookService,
     { useClass: WebhookService })
 
+  container.register(TOKENS.JobService,
+    { useClass: JobService })  
+    
   // Infrastructure Services
   container.registerSingleton(TOKENS.QueueService, BullMQQueueService)
 
