@@ -1,6 +1,7 @@
-import { JobDetailResponse, JobResponse } from "../dtos/WebHookDTOs";
+import { Job } from "../../domain/entities/Job";
+import { JobDelivery } from "../../domain/entities/JobDelivery";
 
 export interface IJobService {
-  findById(id: string): Promise<JobDetailResponse>;
-  findByPipelineId(pipelineId: string): Promise<JobResponse[]>;
+  findById(id: string): Promise<(Job & { deliveries: JobDelivery[] })>;
+  findByPipelineId(pipelineId: string): Promise<Job[]>;
 }

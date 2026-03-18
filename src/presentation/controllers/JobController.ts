@@ -4,6 +4,7 @@ import { IJobService } from "../../application/interfaces/IJobService";
 import { sendOk } from "../../shared/http/response";
 import { ParamsHandler } from "../types/http";
 import { JobDetailResponse, JobResponse } from "../../application/dtos/WebHookDTOs";
+import { JobMapper } from "../../application/mappers/JopMapper";
 
 @injectable()
 export class JobController {
@@ -14,11 +15,11 @@ export class JobController {
 
   findById: ParamsHandler<{ id: string }, JobDetailResponse> = async (req, res) => {
     const job = await this.jobService.findById(req.params.id);
-    sendOk(res, job, "Job retrieved successfully");
+    sendOk(res, JobMapper.toDetailResponse(job), "Job retrieved successfully");
   };
 
   findByPipelineId: ParamsHandler<{ pipelineId: string }, JobResponse[]> = async (req, res) => {
     const jobs = await this.jobService.findByPipelineId(req.params.pipelineId);
-    sendOk(res, jobs, "Jobs retrieved successfully");
+    sendOk(res, jobs.map((job) => JobMapper.toResponse(job)), "Jobs retrieved successfully");
   };
 }
