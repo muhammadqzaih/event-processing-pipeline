@@ -1,5 +1,5 @@
-import { Pipeline } from "../../domain/entities/Pipeline";
-import { CreatePipelineRequest, PipelineResponse } from "../dtos/PipelineDTOs";
+import { Pipeline } from "../../domain/entities";
+import { CreatePipelineRequest, PipelineResponse } from "../dtos";
 
 export class PipelineMapper {
   static toResponse(entity: Pipeline): PipelineResponse {

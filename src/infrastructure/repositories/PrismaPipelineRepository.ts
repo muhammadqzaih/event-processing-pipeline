@@ -1,8 +1,8 @@
 import { injectable, inject } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { Pipeline } from "../../domain/entities/Pipeline";
-import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
+import { Pipeline } from "../../domain/entities";
+import { IPipelineRepository } from "../../domain/repositories";
 import { TOKENS } from "../../domain/tokens";
 
 

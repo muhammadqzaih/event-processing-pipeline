@@ -3,8 +3,8 @@ import { inject, injectable } from "tsyringe";
 import { TOKENS } from "../../domain/tokens";
 import { sendAccepted } from "../../shared/http/response";
 import { TypedHandler } from "../types/http";
-import { IWebhookService } from "../../application/interfaces/IWebhookService";
-import { WebhookRequest, WebhookResponse } from "../../application/dtos/WebHookDTOs";
+import { IWebhookService } from "../../application/interfaces";
+import { WebhookRequest, WebhookResponse } from "../../application/dtos";
 
 @injectable()
 export class WebhookController {

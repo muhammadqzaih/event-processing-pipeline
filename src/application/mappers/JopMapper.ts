@@ -1,7 +1,7 @@
 
-import { Job } from "../../domain/entities/Job";
-import { JobDelivery } from "../../domain/entities/JobDelivery";
-import { JobDeliveryResponse, JobDetailResponse, JobResponse } from "../dtos/WebHookDTOs";
+import { Job } from "../../domain/entities";
+import { JobDelivery } from "../../domain/entities";
+import { JobDeliveryResponse, JobDetailResponse, JobResponse } from "../dtos";
 
 export class JobMapper {
   static toResponse(entity: Job): JobResponse {

@@ -1,5 +1,5 @@
-import { Action } from "../../domain/entities/Action";
-import { CreateActionRequest, UpdateActionRequest } from "../dtos/ActionDTOs";
+import { Action } from "../../domain/entities";
+import { CreateActionRequest, UpdateActionRequest } from "../dtos";
 
 export interface IActionService {
 	create(data: CreateActionRequest): Promise<Action>;

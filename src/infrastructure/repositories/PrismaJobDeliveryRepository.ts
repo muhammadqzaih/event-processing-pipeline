@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
 
-import { IJobDeliveryRepository } from "../../domain/repositories/IJobDeliveryRepository";
+import { IJobDeliveryRepository } from "../../domain/repositories";
 import { TOKENS } from "../../domain/tokens";
-import { DeliveryStatus, JobDelivery } from "../../domain/entities/JobDelivery";
+import { DeliveryStatus, JobDelivery } from "../../domain/entities";
 
 type PrismaDeliveryRecord = {
   id: string;

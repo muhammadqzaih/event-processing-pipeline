@@ -1,4 +1,4 @@
-import { WebhookRequest, WebhookResponse } from "../dtos/WebHookDTOs";
+import { WebhookRequest, WebhookResponse } from "../dtos";
 
 
 export interface IWebhookService {

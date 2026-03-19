@@ -1,5 +1,5 @@
-import { Subscriber } from "../../domain/entities/Subscriber";
-import { CreateSubscriberRequest, UpdateSubscriberRequest } from "../dtos/SubscriberDTOs";
+import { Subscriber } from "../../domain/entities";
+import { CreateSubscriberRequest, UpdateSubscriberRequest } from "../dtos";
 
 export interface ISubscriberService {
   create(data: CreateSubscriberRequest): Promise<Subscriber>;

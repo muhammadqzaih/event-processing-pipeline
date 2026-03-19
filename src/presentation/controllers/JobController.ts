@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 import { TOKENS } from "../../domain/tokens";
-import { IJobService } from "../../application/interfaces/IJobService";
+import { IJobService } from "../../application/interfaces";
 import { sendOk } from "../../shared/http/response";
 import { ParamsHandler } from "../types/http";
-import { JobDetailResponse, JobResponse } from "../../application/dtos/WebHookDTOs";
+import { JobDetailResponse, JobResponse } from "../../application/dtos";
 import { JobMapper } from "../../application/mappers/JopMapper";
 
 @injectable()

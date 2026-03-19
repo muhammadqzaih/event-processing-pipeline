@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { TOKENS } from "../../domain/tokens";
-import { IActionService } from "../../application/interfaces/IActionService";
+import { IActionService } from "../../application/interfaces";
 import { ActionMapper } from "../../application/mappers/barrel";
 import { sendCreated, sendNoContent, sendOk } from "../../shared/http/response";
 import { ParamsBodyHandler, ParamsHandler, TypedHandler } from "../types/http";
-import { ActionResponse, CreateActionRequest, UpdateActionRequest } from "../../application/dtos/ActionDTOs";
+import { ActionResponse, CreateActionRequest, UpdateActionRequest } from "../../application/dtos";
 
 @injectable()
 export class ActionController {
