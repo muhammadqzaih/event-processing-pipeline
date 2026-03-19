@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
+import { IPipelineRepository } from "../../domain/repositories";
 import { TOKENS } from "../../domain/tokens";
-import { IPipelineService } from "../interfaces/IPipelineService";
+import { IPipelineService } from "../interfaces";
 import { AppError } from "../../shared/AppError";
-import { Pipeline } from "../../domain/entities/Pipeline";
-import { CreatePipelineRequest, UpdatePipelineRequest } from "../dtos/PipelineDTOs";
+import { Pipeline } from "../../domain/entities";
+import { CreatePipelineRequest, UpdatePipelineRequest } from "../dtos";
 
 @injectable()
 export class PipelineService implements IPipelineService {

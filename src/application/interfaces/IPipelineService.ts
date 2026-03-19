@@ -1,5 +1,5 @@
-import { Pipeline } from "../../domain/entities/Pipeline";
-import { CreatePipelineRequest, UpdatePipelineRequest } from "../dtos/PipelineDTOs";
+import { Pipeline } from "../../domain/entities";
+import { CreatePipelineRequest, UpdatePipelineRequest } from "../dtos";
 
 export interface IPipelineService {
   create(data: CreatePipelineRequest): Promise<Pipeline>;

@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IJobService } from "../interfaces/IJobService";
-import { IJobRepository } from "../../domain/repositories/IJobRepository";
-import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
+import { IJobService } from "../interfaces";
+import { IJobRepository } from "../../domain/repositories";
+import { IPipelineRepository } from "../../domain/repositories";
 import { TOKENS } from "../../domain/tokens";
 
 import { AppError } from "../../shared/AppError";
-import { Job } from "../../domain/entities/Job";
-import { JobDelivery } from "../../domain/entities/JobDelivery";
+import { Job } from "../../domain/entities";
+import { JobDelivery } from "../../domain/entities";
 
 @injectable()
 export class JobService implements IJobService {

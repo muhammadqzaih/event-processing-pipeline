@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { TOKENS } from "../../domain/tokens";
-import { ISubscriberService } from "../../application/interfaces/ISubscriberService";
+import { ISubscriberService } from "../../application/interfaces";
 import { SubscriberMapper } from "../../application/mappers/SubscriberMapper";
 import { sendCreated, sendNoContent,  sendOk } from "../../shared/http/response";
 import {ParamsBodyHandler, ParamsHandler, TypedHandler } from "../types/http";
-import { SubscriberResponse, CreateSubscriberRequest, UpdateSubscriberRequest } from "../../application/dtos/SubscriberDTOs";
+import { SubscriberResponse, CreateSubscriberRequest, UpdateSubscriberRequest } from "../../application/dtos";
 
 @injectable()
 export class SubscriberController {

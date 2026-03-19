@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { TOKENS } from "../../domain/tokens";
-import { ISubscriberRepository } from "../../domain/repositories/ISubscriberRepository";
-import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
-import { ISubscriberService } from "../interfaces/ISubscriberService";
-import { CreateSubscriberRequest, UpdateSubscriberRequest } from "../dtos/SubscriberDTOs";
-import { Subscriber } from "../../domain/entities/Subscriber";
+import { ISubscriberRepository } from "../../domain/repositories";
+import { IPipelineRepository } from "../../domain/repositories";
+import { ISubscriberService } from "../interfaces";
+import { CreateSubscriberRequest, UpdateSubscriberRequest } from "../dtos";
+import { Subscriber } from "../../domain/entities";
 import { AppError } from "../../shared/AppError";
 
 @injectable()

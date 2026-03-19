@@ -1,7 +1,7 @@
 import { Queue } from "bullmq";
 import { injectable } from "tsyringe";
 import { config } from "../../config";
-import { IQueueService } from "../../application/interfaces/IQueueService";
+import { IQueueService } from "../../application/interfaces";
 import { AppError } from "../../shared/AppError";
 
 @injectable()

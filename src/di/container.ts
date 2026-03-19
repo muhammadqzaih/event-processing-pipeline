@@ -4,15 +4,15 @@ import { TOKENS } from "../domain/tokens";
 import { getPrismaClient } from "../infrastructure/database/prisma-client";
 import { PrismaPipelineRepository } from "../infrastructure/repositories/PrismaPipelineRepository";
 import { PrismaActionRepository } from "../infrastructure/repositories/PrismaActionRepository";
-import { PipelineService } from "../application/services/PipelineService";
-import { ActionService } from "../application/services/ActionService";
-import { SubscriberService } from "../application/services/SubscriberService";
+import { PipelineService } from "../application/services";
+import { ActionService } from "../application/services";
+import { SubscriberService } from "../application/services";
 import { PrismaSubscriberRepository } from "../infrastructure/repositories/PrismaSubscriberRepository";
 import { PrismaJobRepository } from "../infrastructure/repositories/PrismaJobRepository";
 
-import { WebhookService } from "../application/services/WebhookService";
+import { WebhookService } from "../application/services";
 import { BullMQQueueService } from "../infrastructure/services/BullMQQueueService";
-import { JobService } from "../application/services/JobService";
+import { JobService } from "../application/services";
 
 export function registerDependencies(): void {
   // PrismaClient (singleton)

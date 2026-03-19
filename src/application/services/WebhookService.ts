@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { IWebhookService } from "../interfaces/IWebhookService";
+import { IWebhookService } from "../interfaces";
 
 import { TOKENS } from "../../domain/tokens";
-import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
-import { IJobRepository } from "../../domain/repositories/IJobRepository";
+import { IPipelineRepository } from "../../domain/repositories";
+import { IJobRepository } from "../../domain/repositories";
 
 import { AppError } from "../../shared/AppError";
-import { IQueueService } from "../interfaces/IQueueService";
-import { WebhookRequest, WebhookResponse } from "../dtos/WebHookDTOs";
+import { IQueueService } from "../interfaces";
+import { WebhookRequest, WebhookResponse } from "../dtos";
 
 @injectable()
 export class WebhookService implements IWebhookService {

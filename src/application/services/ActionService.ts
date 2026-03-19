@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { TOKENS } from "../../domain/tokens";
-import { IActionRepository } from "../../domain/repositories/IActionRepository";
-import { IPipelineRepository } from "../../domain/repositories/IPipelineRepository";
-import { IActionService } from "../interfaces/IActionService";
-import { CreateActionRequest, UpdateActionRequest } from "../dtos/ActionDTOs";
-import { Action } from "../../domain/entities/Action";
+import { IActionRepository } from "../../domain/repositories";
+import { IPipelineRepository } from "../../domain/repositories";
+import { IActionService } from "../interfaces";
+import { CreateActionRequest, UpdateActionRequest } from "../dtos";
+import { Action } from "../../domain/entities";
 import { AppError } from "../../shared/AppError";
 
 @injectable()
