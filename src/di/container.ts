@@ -12,7 +12,7 @@ import { PrismaJobRepository } from "../infrastructure/repositories/PrismaJobRep
 
 import { WebhookService } from "../application/services/WebhookService";
 import { BullMQQueueService } from "../infrastructure/services/BullMQQueueService";
-import { JobService } from "../application/services/jopService";
+import { JobService } from "../application/services/JobService";
 
 export function registerDependencies(): void {
   // PrismaClient (singleton)

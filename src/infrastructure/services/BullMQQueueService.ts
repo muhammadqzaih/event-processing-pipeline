@@ -2,6 +2,7 @@ import { Queue } from "bullmq";
 import { injectable } from "tsyringe";
 import { config } from "../../config";
 import { IQueueService } from "../../application/interfaces/IQueueService";
+import { AppError } from "../../shared/AppError";
 
 @injectable()
 export class BullMQQueueService implements IQueueService {
@@ -32,15 +33,19 @@ export class BullMQQueueService implements IQueueService {
   }
 
   async addJob(jobId: string, pipelineId: string): Promise<void> {
-    await this.ensureJobQueue().add(
-      "process-job",
-      { jobId, pipelineId },
-      {
-        jobId,
-        removeOnComplete: 100,
-        removeOnFail: 200,
-      },
-    );
+    try {
+      await this.ensureJobQueue().add(
+        "process-job",
+        { jobId, pipelineId },
+        {
+          jobId,
+          removeOnComplete: 100,
+          removeOnFail: 200,
+        },
+      );
+    } catch {
+      throw AppError.serviceUnavailable("Queue service unavailable. Please try again later.");
+    }
   }
 
 }

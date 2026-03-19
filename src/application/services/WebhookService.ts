@@ -32,11 +32,7 @@ export class WebhookService implements IWebhookService {
       status: "pending",
     });
 
-    try {
-      await this.queueService.addJob(job.id, pipelineId);
-    } catch {
-      throw AppError.serviceUnavailable("Queue service unavailable. Please try again later.");
-    }
+    await this.queueService.addJob(job.id, pipelineId);
 
     return {
       jobId: job.id,
