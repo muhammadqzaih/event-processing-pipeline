@@ -14,8 +14,12 @@ export const TOKENS = {
   JobService: Symbol.for("IJobService"),
   SubscriberService: Symbol.for("ISubscriberService"),
   WebhookService: Symbol.for("IWebhookService"),
+  WorkerService: Symbol.for("IWorkerService"),
+  ActionExecutor: Symbol.for("IActionExecutor"),
 
   // Infrastructure
   PrismaClient: Symbol.for('PrismaClient'),
   QueueService: Symbol.for("IQueueService"),
+  HttpClient: Symbol.for("IHttpClient"),
+
 } as const;
