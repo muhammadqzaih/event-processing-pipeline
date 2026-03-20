@@ -144,4 +144,20 @@ export class PrismaJobRepository implements IJobRepository {
       updatedAt: record.updatedAt,
     };
   }
+
+  async updateStatus(
+    id: string,
+    status: JobStatus,
+    result?: Record<string, unknown> | null,
+  ): Promise<Job> {
+    const updated = await this.prisma.job.update({
+      where: { id },
+      data: {
+        status,
+        result: result !== undefined ? JSON.stringify(result) : undefined,
+      },
+    });
+
+    return this.toDomain(updated);
+  }
 }

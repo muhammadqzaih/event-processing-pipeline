@@ -7,7 +7,8 @@ import { AppError } from "../../shared/AppError";
 @injectable()
 export class BullMQQueueService implements IQueueService {
   private jobQueue: Queue | null = null;
-
+  private retryQueue: Queue | null = null;
+  
   constructor() {
     // Queues are created lazily so API startup does not spam logs
     // when Redis is temporarily unavailable.
@@ -48,4 +49,33 @@ export class BullMQQueueService implements IQueueService {
     }
   }
 
+  private ensureRetryQueue(): Queue {
+    if (!this.retryQueue) {
+      this.retryQueue = new Queue("delivery-retry", {
+        connection: this.getConnection(),
+      });
+    }
+
+    return this.retryQueue;
+  }
+
+  async addDeliveryRetry(deliveryId: string, delay: number): Promise<void> {
+    await this.ensureRetryQueue().add(
+      "retry-delivery",
+      { deliveryId },
+      {
+        delay,
+        removeOnComplete: 100,
+        removeOnFail: 200,
+      },
+    );
+  }
+
+  getJobQueue(): Queue {
+    return this.ensureJobQueue();
+  }
+
+  getRetryQueue(): Queue {
+    return this.ensureRetryQueue();
+  }
 }

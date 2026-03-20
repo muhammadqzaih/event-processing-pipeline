@@ -8,6 +8,12 @@ export interface IJobRepository {
     result?: Record<string, unknown> | null;
     status?: JobStatus;
   }): Promise<Job>;
+  
+  updateStatus(
+    id: string,
+    status: JobStatus,
+    result?: Record<string, unknown> | null,
+  ): Promise<Job>;
 
   findById(id: string): Promise<Job | null>;
   findByPipelineId(pipelineId: string): Promise<Job[]>;
