@@ -9,7 +9,7 @@ import { IWorkerService } from "../../interfaces/IWorkerService";
 import { AppError } from "../../../shared/AppError"; 
 import { config } from "../../../config"; 
 import { IActionExecutor } from "../../interfaces/IActionExecutor"; 
-import { DeliveryResult, IHttpClient } from "../IHttpClient";
+import { DeliveryResult, IHttpClient } from "../../interfaces/IHttpClient";
 import { IQueueService } from "../../interfaces";
 
 @injectable()
