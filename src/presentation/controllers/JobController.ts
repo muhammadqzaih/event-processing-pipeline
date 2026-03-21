@@ -14,12 +14,12 @@ export class JobController {
   ) {}
 
   findById: ParamsHandler<{ id: string }, JobDetailResponse> = async (req, res) => {
-    const job = await this.jobService.findById(req.params.id);
+    const job = await this.jobService.findById(req.params.id, req.userId);
     sendOk(res, JobMapper.toDetailResponse(job), "Job retrieved successfully");
   };
 
   findByPipelineId: ParamsHandler<{ pipelineId: string }, JobResponse[]> = async (req, res) => {
-    const jobs = await this.jobService.findByPipelineId(req.params.pipelineId);
+    const jobs = await this.jobService.findByPipelineId(req.params.pipelineId, req.userId);
     sendOk(res, jobs.map((job) => JobMapper.toResponse(job)), "Jobs retrieved successfully");
   };
 }

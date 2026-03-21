@@ -16,8 +16,8 @@ export class ActionService implements IActionService {
 		private readonly pipelineRepository: IPipelineRepository,
 	) {}
 
-	private async ensurePipelineExists(pipelineId: string): Promise<void> {
-		const pipeline = await this.pipelineRepository.findById(pipelineId);
+	private async ensurePipelineOwnedByUser(pipelineId: string, userId: string): Promise<void> {
+		const pipeline = await this.pipelineRepository.findByIdForUser(pipelineId, userId);
 		if (!pipeline) {
 			throw AppError.notFound("Pipeline not found");
 		}
@@ -38,8 +38,8 @@ export class ActionService implements IActionService {
 		}
 	}
 
-	async create(data: CreateActionRequest): Promise<Action> {
-		await this.ensurePipelineExists(data.pipelineId);
+	async create(data: CreateActionRequest, userId: string): Promise<Action> {
+		await this.ensurePipelineOwnedByUser(data.pipelineId, userId);
 		const targetOrder = data.order ?? 0;
 		await this.ensureOrderUniqueInPipeline(data.pipelineId, targetOrder);
 
@@ -51,16 +51,18 @@ export class ActionService implements IActionService {
 		});
 	}
 
-	async findByPipelineId(pipelineId: string): Promise<Action[]> {
-		await this.ensurePipelineExists(pipelineId);
+	async findByPipelineId(pipelineId: string, userId: string): Promise<Action[]> {
+		await this.ensurePipelineOwnedByUser(pipelineId, userId);
 		return this.actionRepository.findByPipelineId(pipelineId);
 	}
 
-  async update(id: string, data: UpdateActionRequest): Promise<Action> {
+	async update(id: string, data: UpdateActionRequest, userId: string): Promise<Action> {
 		const existing = await this.actionRepository.findById(id);
 		if (!existing) {
 			throw AppError.notFound("Action not found");
 		}
+
+		await this.ensurePipelineOwnedByUser(existing.pipelineId, userId);
 
 		if (data.order !== undefined) {
 			await this.ensureOrderUniqueInPipeline(existing.pipelineId, data.order, existing.id);
@@ -73,11 +75,13 @@ export class ActionService implements IActionService {
 		});
 	}
 
-	async delete(id: string): Promise<void> {
+	async delete(id: string, userId: string): Promise<void> {
 		const existing = await this.actionRepository.findById(id);
 		if (!existing) {
 			throw AppError.notFound("Action not found");
 		}
+
+		await this.ensurePipelineOwnedByUser(existing.pipelineId, userId);
 
 		await this.actionRepository.delete(id);
 	}

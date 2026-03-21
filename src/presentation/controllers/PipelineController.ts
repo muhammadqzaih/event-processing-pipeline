@@ -15,7 +15,7 @@ export class PipelineController {
   ) {}
 
   create: TypedHandler<CreatePipelineRequest, PipelineResponse> = async (req, res) => {
-    const result = await this.pipelineService.create(req.body);
+    const result = await this.pipelineService.create(req.body, req.userId);
     sendCreated(
       res,
       PipelineMapper.toResponse(result),
@@ -24,7 +24,7 @@ export class PipelineController {
   };
   
   findAll: TypedHandler<unknown, PipelineResponse[]> = async (req, res) => {
-    const result = await this.pipelineService.findAll();
+    const result = await this.pipelineService.findAll(req.userId);
     sendOk(
       res,
       result.map((pipeline) => PipelineMapper.toResponse(pipeline)),
@@ -33,7 +33,7 @@ export class PipelineController {
   }
 
   findById: ParamsHandler<{ id: string }, PipelineResponse> = async (req, res) => {
-    const result = await this.pipelineService.findById(req.params.id);
+    const result = await this.pipelineService.findById(req.params.id, req.userId);
     sendOk(
       res,
       PipelineMapper.toResponse(result),
@@ -42,7 +42,7 @@ export class PipelineController {
   };
 
   update: TypedHandler<UpdatePipelineRequest, PipelineResponse, { id: string }> = async (req, res) => {
-    const pipeline = await this.pipelineService.update(req.params.id, req.body);
+    const pipeline = await this.pipelineService.update(req.params.id, req.body, req.userId);
     sendOk(
       res,
        PipelineMapper.toResponse(pipeline),
@@ -51,7 +51,7 @@ export class PipelineController {
   };
 
   delete: ParamsHandler<{ id: string }, void> = async (req, res) => {
-    await this.pipelineService.delete(req.params.id);
+    await this.pipelineService.delete(req.params.id, req.userId);
     sendNoContent(
       res
     );

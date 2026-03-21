@@ -14,23 +14,23 @@ export class ActionController {
 	) {}
 
 	create: TypedHandler<CreateActionRequest, ActionResponse> = async (req, res) => {
-		const action = await this.actionService.create(req.body);
+		const action = await this.actionService.create(req.body, req.userId);
 		sendCreated(res, ActionMapper.toResponse(action), "Action created successfully");
 	};
 
 	findByPipelineId: ParamsHandler<{ pipelineId: string }, ActionResponse[]> = async (req, res) => {
-		const actions = await this.actionService.findByPipelineId(req.params.pipelineId);
+		const actions = await this.actionService.findByPipelineId(req.params.pipelineId, req.userId);
 		const response = actions.map((a) => ActionMapper.toResponse(a));
 		sendOk(res, response, "Actions retrieved successfully");
 	};
 
   update: ParamsBodyHandler<UpdateActionRequest, { id: string }, ActionResponse> = async (req, res) => {
-		const updated = await this.actionService.update(req.params.id, req.body);
+		const updated = await this.actionService.update(req.params.id, req.body, req.userId);
 		sendOk(res, ActionMapper.toResponse(updated), "Action updated successfully");
 	};
 
 	delete: ParamsHandler<{ id: string }, void> = async (req, res) => {
-		await this.actionService.delete(req.params.id);
+		await this.actionService.delete(req.params.id, req.userId);
 		sendNoContent(res);
 	};
 }

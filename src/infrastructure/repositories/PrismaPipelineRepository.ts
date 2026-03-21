@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Pipeline } from "../../domain/entities";
 import { IPipelineRepository } from "../../domain/repositories";
 import { TOKENS } from "../../domain/tokens";
+import { AppError } from "../../shared/AppError";
 
 
 @injectable()
@@ -14,18 +15,20 @@ export class PrismaPipelineRepository implements IPipelineRepository{
     private prisma: PrismaClient
   ) {}
 
-  async create(data: { name: string; description: string | null }): Promise<Pipeline> {
+  async create(data: { name: string; description: string | null; userId: string }): Promise<Pipeline> {
     return this.prisma.pipeline.create({
       data: {
         name: data.name,
         description: data.description,
+        userId: data.userId,
         webhookKey: uuidv4()
       }
     });
   }
 
-  async findAll(): Promise<Pipeline[]> {
+  async findAllByUserId(userId: string): Promise<Pipeline[]> {
     return this.prisma.pipeline.findMany({
+      where: { userId },
       orderBy: { createdAt: "desc" }
     })
   }
@@ -36,11 +39,27 @@ export class PrismaPipelineRepository implements IPipelineRepository{
     })
   }
 
-  async update(id: string, data: { name?: string; description?: string | null }): Promise<Pipeline> {
+  async findByIdForUser(id: string, userId: string): Promise<Pipeline | null> {
+    return this.prisma.pipeline.findFirst({
+      where: { id, userId }
+    })
+  }
+
+  async update(id: string, userId: string, data: { name?: string; description?: string | null }): Promise<Pipeline> {
+    const existing = await this.findByIdForUser(id, userId);
+    if (!existing) {
+      throw AppError.notFound("Pipeline not found");
+    }
+
     return this.prisma.pipeline.update({ where: { id }, data });
   }
   
-  async delete(id: string): Promise<void> {
+  async delete(id: string, userId: string): Promise<void> {
+    const existing = await this.findByIdForUser(id, userId);
+    if (!existing) {
+      throw AppError.notFound("Pipeline not found");
+    }
+
     await this.prisma.pipeline.delete({ where: { id } });
   }
 }
