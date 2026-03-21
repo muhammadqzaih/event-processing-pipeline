@@ -4,21 +4,19 @@ import { TOKENS } from "../domain/tokens";
 import { getPrismaClient } from "../infrastructure/database/prisma-client";
 import { PrismaPipelineRepository } from "../infrastructure/repositories/PrismaPipelineRepository";
 import { PrismaActionRepository } from "../infrastructure/repositories/PrismaActionRepository";
-import { PipelineService } from "../application/services";
-import { ActionService } from "../application/services";
-import { SubscriberService } from "../application/services";
+import { ActionService, AuthService, JobService, PipelineService, SubscriberService, WebhookService } from "../application/services";
 import { PrismaSubscriberRepository } from "../infrastructure/repositories/PrismaSubscriberRepository";
 import { PrismaJobRepository } from "../infrastructure/repositories/PrismaJobRepository";
 import { PrismaJobDeliveryRepository } from "../infrastructure/repositories/PrismaJobDeliveryRepository";
-
-import { WebhookService } from "../application/services";
 import { BullMQQueueService } from "../infrastructure/services/BullMQQueueService";
-import { JobService } from "../application/services";
 import { WorkerService } from "../application/services/worker/WorkerService";
 import { TransformExecutor } from "../application/services/worker/executors/TransformExecutor";
 import { FilterExecutor } from "../application/services/worker/executors/FilterExecutor";
 import { EnrichExecutor } from "../application/services/worker/executors/EnrichExecutor";
 import { FetchHttpClient } from "../infrastructure/services/FetchHttpClient"; 
+import { PrismaUserRepository } from "../infrastructure/repositories/PrismaUserRepository";
+import { BcryptHashService } from "../infrastructure/services/BcryptHashService";
+import { JwtTokenService } from "../infrastructure/services/JwtTokenService";
 export function registerDependencies(): void {
   // PrismaClient (singleton)
   container.register<PrismaClient>(TOKENS.PrismaClient, {
@@ -26,6 +24,9 @@ export function registerDependencies(): void {
   });
 
   // Repositories
+  container.register(TOKENS.UserRepository,
+    { useClass: PrismaUserRepository })
+
   container.register(TOKENS.PipelineRepository,
     { useClass: PrismaPipelineRepository })
 
@@ -54,6 +55,9 @@ export function registerDependencies(): void {
   container.register(TOKENS.WebhookService,
     { useClass: WebhookService })
 
+  container.register(TOKENS.AuthService,
+    { useClass: AuthService })
+
   container.register(TOKENS.JobService,
     { useClass: JobService })
 
@@ -62,6 +66,12 @@ export function registerDependencies(): void {
 
   container.register(TOKENS.HttpClient,
     { useClass: FetchHttpClient })
+
+  container.register(TOKENS.HashService,
+    { useClass: BcryptHashService })
+
+  container.register(TOKENS.TokenService,
+    { useClass: JwtTokenService })
 
   container.register(TOKENS.ActionExecutor,
     { useClass: TransformExecutor })

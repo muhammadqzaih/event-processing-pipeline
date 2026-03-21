@@ -12,6 +12,7 @@
  *     summary: Ingest webhook payload for a pipeline
  *     description: Accepts arbitrary JSON payload from external systems and queues it for async processing.
  *     tags: [Webhooks]
+ *     security: []
  *     parameters:
  *       - in: path
  *         name: id
