@@ -13,19 +13,20 @@ export class PipelineService implements IPipelineService {
     private readonly pipelineRepository: IPipelineRepository,
   ) {}
 
-  async create(data: CreatePipelineRequest): Promise<Pipeline> {
+  async create(data: CreatePipelineRequest, userId: string): Promise<Pipeline> {
     return this.pipelineRepository.create({
       name: data.name,
-      description: data.description ?? null
+      description: data.description ?? null,
+      userId,
     });
   }
 
-  async findAll(): Promise<Pipeline[]> {
-    return this.pipelineRepository.findAll();
+  async findAll(userId: string): Promise<Pipeline[]> {
+    return this.pipelineRepository.findAllByUserId(userId);
   }
 
-  async findById(id: string): Promise<Pipeline> {
-    const pipeline = await this.pipelineRepository.findById(id)
+  async findById(id: string, userId: string): Promise<Pipeline> {
+    const pipeline = await this.pipelineRepository.findByIdForUser(id, userId)
     if (!pipeline) {
       throw AppError.notFound("Pipeline not found")
     }
@@ -33,16 +34,16 @@ export class PipelineService implements IPipelineService {
     return pipeline;
   }
 
-  async update(id: string, data: UpdatePipelineRequest): Promise<Pipeline> {
-    await this.findById(id); 
-    return this.pipelineRepository.update(id, {
+  async update(id: string, data: UpdatePipelineRequest, userId: string): Promise<Pipeline> {
+    await this.findById(id, userId);
+    return this.pipelineRepository.update(id, userId, {
       name: data.name,
       description: data.description
     });
   }
 
-  async delete(id: string): Promise<void> {
-    await this.findById(id); 
-    await this.pipelineRepository.delete(id);
+  async delete(id: string, userId: string): Promise<void> {
+    await this.findById(id, userId);
+    await this.pipelineRepository.delete(id, userId);
   }
 }
