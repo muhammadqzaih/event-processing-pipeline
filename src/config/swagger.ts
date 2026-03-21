@@ -2,8 +2,17 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import path from 'path';
 import { config } from '.';
 
-const docsGlob = path.resolve(__dirname, '../presentation/docs/*.ts');
-const routesGlob = path.resolve(__dirname, '../presentation/routes/*.ts');
+const projectRoot = process.cwd();
+
+const docsGlobs = [
+  path.join(projectRoot, 'src/presentation/docs/**/*.{ts,js}'),
+  path.join(projectRoot, 'dist/presentation/docs/**/*.js'),
+];
+
+const routesGlobs = [
+  path.join(projectRoot, 'src/presentation/routes/**/*.{ts,js}'),
+  path.join(projectRoot, 'dist/presentation/routes/**/*.js'),
+];
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -34,8 +43,8 @@ const options: swaggerJsdoc.Options = {
     ],
   },
   apis: [
-    routesGlob,
-    docsGlob,
+    ...routesGlobs,
+    ...docsGlobs,
   ],
 };
 

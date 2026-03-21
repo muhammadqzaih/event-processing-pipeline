@@ -60,7 +60,7 @@
  *         description: Pipeline retrieved successfully
  *       404:
  *         description: Pipeline not found
-*   patch:
+ *   patch:
  *     summary: Update a pipeline by ID
  *     tags: [Pipelines]
  *     parameters:
