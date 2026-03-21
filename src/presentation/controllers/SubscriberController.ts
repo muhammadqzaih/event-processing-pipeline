@@ -14,7 +14,7 @@ export class SubscriberController {
   ) {}
 
   create: TypedHandler<CreateSubscriberRequest, SubscriberResponse> = async (req, res) => {
-    const subscriber = await this.subscriberService.create(req.body);
+    const subscriber = await this.subscriberService.create(req.body, req.userId);
     sendCreated(res,
        SubscriberMapper.toResponse(subscriber),
         "Subscriber added successfully"
@@ -22,7 +22,7 @@ export class SubscriberController {
   };
 
   findByPipelineId: ParamsHandler<{ pipelineId: string }, SubscriberResponse[]> = async (req, res) => {
-    const subscribers = await this.subscriberService.findByPipelineId(req.params.pipelineId);
+    const subscribers = await this.subscriberService.findByPipelineId(req.params.pipelineId, req.userId);
     const response = subscribers.map((s) => SubscriberMapper.toResponse(s));
     sendOk(res,
        response,
@@ -31,7 +31,7 @@ export class SubscriberController {
   };
   
   update: ParamsBodyHandler<UpdateSubscriberRequest, { id: string }, SubscriberResponse> = async (req, res) => {
-    const updated = await this.subscriberService.update(req.params.id, req.body);
+    const updated = await this.subscriberService.update(req.params.id, req.body, req.userId);
     sendOk(res,
        SubscriberMapper.toResponse(updated),
       "Subscriber updated successfully"
@@ -39,7 +39,7 @@ export class SubscriberController {
   };
 
   delete: ParamsHandler<{ id: string }, void> = async (req, res) => {
-    await this.subscriberService.delete(req.params.id);
+    await this.subscriberService.delete(req.params.id, req.userId);
     sendNoContent(res);
   };
 }

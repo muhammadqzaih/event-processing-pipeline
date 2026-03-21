@@ -1,6 +1,7 @@
 export const TOKENS = {
 
   //Repositories
+  UserRepository: Symbol.for('IUserRepository'),
   PipelineRepository: Symbol.for('IPipelineRepository'),
   ActionRepository: Symbol.for('IActionRepository'),
   SubscriberRepository: Symbol.for("ISubscriberRepository"),
@@ -14,6 +15,7 @@ export const TOKENS = {
   JobService: Symbol.for("IJobService"),
   SubscriberService: Symbol.for("ISubscriberService"),
   WebhookService: Symbol.for("IWebhookService"),
+  AuthService: Symbol.for("IAuthService"),
   WorkerService: Symbol.for("IWorkerService"),
   ActionExecutor: Symbol.for("IActionExecutor"),
 
@@ -21,5 +23,7 @@ export const TOKENS = {
   PrismaClient: Symbol.for('PrismaClient'),
   QueueService: Symbol.for("IQueueService"),
   HttpClient: Symbol.for("IHttpClient"),
+  HashService: Symbol.for("IHashService"),
+  TokenService: Symbol.for("ITokenService"),
 
 } as const;

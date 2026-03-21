@@ -18,20 +18,26 @@ export class JobService implements IJobService {
     private readonly pipelineRepository: IPipelineRepository,
   ) {}
 
-  async findById(id: string): Promise<(Job & { deliveries: JobDelivery[] })> {
+  private async ensurePipelineOwnedByUser(pipelineId: string, userId: string): Promise<void> {
+    const pipeline = await this.pipelineRepository.findByIdForUser(pipelineId, userId);
+    if (!pipeline) {
+      throw AppError.notFound("Pipeline not found");
+    }
+  }
+
+  async findById(id: string, userId: string): Promise<(Job & { deliveries: JobDelivery[] })> {
     const job = await this.jobRepository.findByIdWithDeliveries(id);
     if (!job) {
       throw AppError.notFound("Job not found");
     }
 
+    await this.ensurePipelineOwnedByUser(job.pipelineId, userId);
+
     return job;
   }
 
-  async findByPipelineId(pipelineId: string): Promise<Job[]> {
-    const pipeline = await this.pipelineRepository.findById(pipelineId);
-    if (!pipeline) {
-      throw AppError.notFound("Pipeline not found");
-    }
+  async findByPipelineId(pipelineId: string, userId: string): Promise<Job[]> {
+    await this.ensurePipelineOwnedByUser(pipelineId, userId);
 
     const jobs = await this.jobRepository.findByPipelineId(pipelineId);
     return jobs;

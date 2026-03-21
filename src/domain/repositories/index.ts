@@ -3,3 +3,4 @@ export * from "./IJobDeliveryRepository";
 export * from "./IJobRepository";
 export * from "./IPipelineRepository";
 export * from "./ISubscriberRepository";
+export * from "./IUserRepository";
