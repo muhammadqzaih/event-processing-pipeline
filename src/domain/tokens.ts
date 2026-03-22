@@ -7,15 +7,8 @@ export const TOKENS = {
   SubscriberRepository: Symbol.for("ISubscriberRepository"),
   JobRepository: Symbol.for("IJobRepository"),
   JobDeliveryRepository: Symbol.for("IJobDeliveryRepository"),
-  //Services
 
-  //Application Services
-  PipelineService: Symbol.for('IPipelineService'),
-  ActionService: Symbol.for('IActionService'),
-  JobService: Symbol.for("IJobService"),
-  SubscriberService: Symbol.for("ISubscriberService"),
-  WebhookService: Symbol.for("IWebhookService"),
-  AuthService: Symbol.for("IAuthService"),
+  // Application
   WorkerService: Symbol.for("IWorkerService"),
   ActionExecutor: Symbol.for("IActionExecutor"),
 
@@ -25,5 +18,6 @@ export const TOKENS = {
   HttpClient: Symbol.for("IHttpClient"),
   HashService: Symbol.for("IHashService"),
   TokenService: Symbol.for("ITokenService"),
+  Mediator: Symbol.for("IMediator"),
 
 } as const;

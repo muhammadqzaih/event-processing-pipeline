@@ -1,7 +1,7 @@
 
 import { Job } from "../../domain/entities";
 import { JobDelivery } from "../../domain/entities";
-import { JobDeliveryResponse, JobDetailResponse, JobResponse } from "../dtos";
+import { JobDeliveryResponse, JobDetailResponse, JobResponse } from "../DTOs";
 
 export class JobMapper {
   static toResponse(entity: Job): JobResponse {

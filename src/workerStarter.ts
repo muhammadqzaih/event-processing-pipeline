@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { registerDependencies, container } from  "./di/container";
 import { TOKENS } from "./domain/tokens";
-import { IWorkerService } from "./application/interfaces/IWorkerService";
+import { IWorkerService } from "./application/contracts/IWorkerService";
 import { BullMQQueueService } from "./infrastructure/services/BullMQQueueService";
 import { disconnectPrisma } from "./infrastructure/database/prisma-client";
 import { createQueueWorkers } from "./infrastructure/worker/createQueueWorkers";

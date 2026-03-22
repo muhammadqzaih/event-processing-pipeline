@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { DeliveryResult, IHttpClient } from "../../application/interfaces/IHttpClient";
+import { DeliveryResult, IHttpClient } from "../../application/contracts/IHttpClient";
 
 
 @injectable()

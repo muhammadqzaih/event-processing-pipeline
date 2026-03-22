@@ -1,20 +1,22 @@
 import { inject, injectable } from "tsyringe";
-
 import { TOKENS } from "../../domain/tokens";
-import { sendAccepted } from "../../shared/http/response";
+import { IMediator } from "../../application/contracts";
+
+import { sendAccepted } from "../common/http/response";
 import { TypedHandler } from "../types/http";
-import { IWebhookService } from "../../application/interfaces";
-import { WebhookRequest, WebhookResponse } from "../../application/dtos";
+import { WebhookRequest, WebhookResponse } from "../../application/DTOs";
+import { IngestWebhookCommand } from "../../application/Features/webhook/commands/ingest-webhook/Command";
 
 @injectable()
 export class WebhookController {
   constructor(
-    @inject(TOKENS.WebhookService)
-    private readonly webhookService: IWebhookService,
+    @inject(TOKENS.Mediator)
+    private readonly mediator: IMediator,
   ) {}
 
   ingest: TypedHandler<WebhookRequest, { id: string }, {}, WebhookResponse> = async (req, res) => {
-    const result = await this.webhookService.ingest(req.params.id, req.body);
+    const command = new IngestWebhookCommand(req.params.id, req.body);
+    const result = await this.mediator.send<WebhookResponse>(command);
     sendAccepted(res, result, result.message);
   };
 }

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Pipeline } from "../../domain/entities";
 import { IPipelineRepository } from "../../domain/repositories";
 import { TOKENS } from "../../domain/tokens";
-import { AppError } from "../../shared/AppError";
+import { AppError } from "../../common/AppError";
 
 
 @injectable()
