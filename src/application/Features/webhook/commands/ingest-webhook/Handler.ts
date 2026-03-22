@@ -1,9 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IngestWebhookCommand } from "./Command";
 import { TOKENS } from "../../../../../domain/tokens";
 import { IJobRepository, IPipelineRepository } from "../../../../../domain/repositories";
 import { IQueueService } from "../../../../contracts";
 import { WebhookResponse } from "../../../../DTOs";
+
+import { IngestWebhookCommand } from "./Command";
 import { AppError } from "../../../../../common/AppError";
 
 @injectable()
