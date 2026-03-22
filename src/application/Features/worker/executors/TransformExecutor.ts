@@ -13,6 +13,13 @@ export class TransformExecutor implements IActionExecutor {
   ): Record<string, unknown> {
     const transformed: Record<string, unknown> = { ...payload };
 
+    // Support simple config shape used in docs: { field, operation }
+    const singleField = typeof config.field === "string" ? config.field : undefined;
+    const singleOperation = typeof config.operation === "string" ? config.operation : undefined;
+    if (singleField && singleOperation && singleField in transformed) {
+      transformed[singleField] = this.applyFormatter(transformed[singleField], singleOperation);
+    }
+
     const mappings = this.toRecord(config.mappings);
     for (const [sourceField, targetRaw] of Object.entries(mappings)) {
       const targetField = String(targetRaw);
