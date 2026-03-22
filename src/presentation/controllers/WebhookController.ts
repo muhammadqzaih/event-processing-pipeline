@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { TOKENS } from "../../domain/tokens";
-import { IMediator } from "../../application/contracts";
+import { TOKENS } from "../../Domain/tokens";
+import { IMediator } from "../../Application/Contracts";
 
-import { sendAccepted } from "../common/http/response";
-import { TypedHandler } from "../types/http";
-import { WebhookRequest, WebhookResponse } from "../../application/DTOs";
-import { IngestWebhookCommand } from "../../application/Features/webhook/commands/ingest-webhook/Command";
+import { sendAccepted } from "../Common/http/response";
+import { TypedHandler } from "../Common/http/http";
+import { WebhookRequest, WebhookResponse } from "../../Application/DTOs";
+import { IngestWebhookCommand } from "../../Application/Features/webhook/commands/IngestWebhook/Command";
 
 @injectable()
 export class WebhookController {

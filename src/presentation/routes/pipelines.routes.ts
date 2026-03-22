@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
-import { PipelineController } from '../controllers/PipelineController';
-import { asyncHandlerMiddleware } from '../middleware/asyncHandlerMiddleware';
-import { validate } from '../middleware/validateMiddleware';
+import { PipelineController } from '../Controllers/PipelineController';
+import { asyncHandlerMiddleware } from '../Middleware/asyncHandlerMiddleware';
+import { validate } from '../Middleware/validateMiddleware';
 import {
   createPipelineSchema,
   updatePipelineSchema,
   pipelineIdParamsSchema,
-} from '../validators/pipelineValidators';
+} from '../Validators/pipelineValidators';
 
 export function createPipelineRouter(): Router {
   const router = Router();

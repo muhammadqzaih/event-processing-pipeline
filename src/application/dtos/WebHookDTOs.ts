@@ -1,5 +1,5 @@
-import { JobStatus } from "../../domain/entities";
-import { DeliveryStatus } from "../../domain/entities";
+import { JobStatus } from "../../Domain/Entities";
+import { DeliveryStatus } from "../../Domain/Entities";
 
 export interface WebhookRequest {
   [key: string]: unknown;

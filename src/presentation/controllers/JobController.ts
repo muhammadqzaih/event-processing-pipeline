@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
-import { TOKENS } from "../../domain/tokens";
-import { IMediator } from "../../application/contracts";
-import { sendOk } from "../common/http/response";
-import { ParamsHandler } from "../types/http";
-import { JobDetailResponse, JobResponse } from "../../application/DTOs";
-import { JobMapper } from "../../application/Mappers/JopMapper";
+import { TOKENS } from "../../Domain/tokens";
+import { IMediator } from "../../Application/Contracts";
+import { sendOk } from "../Common/http/response";
+import { ParamsHandler } from "../Common/http/http";
+import { JobDetailResponse, JobResponse } from "../../Application/DTOs";
+import { JobMapper } from "../../Application/Mappers/JopMapper";
 
-import { Job, JobDelivery } from "../../domain/entities";
-import { GetJobByIdQuery } from "../../application/Features/job/queries/get-job-by-id/Query";
-import { GetJobsByPipelineIdQuery } from "../../application/Features/job/queries/get-jobs-by-pipeline-id/Query";
+import { Job, JobDelivery } from "../../Domain/Entities";
+import { GetJobByIdQuery } from "../../Application/Features/job/queries/GetJobById/Query";
+import { GetJobsByPipelineIdQuery } from "../../Application/Features/job/queries/GetJobsByPipelineId/Query";
 
 @injectable()
 export class JobController {

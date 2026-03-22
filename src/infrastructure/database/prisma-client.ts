@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaMssql } from '@prisma/adapter-mssql'
-import { config } from "../../config";
+import { config } from "../../Config";
 
 
 let prismaInstance: PrismaClient | null = null;

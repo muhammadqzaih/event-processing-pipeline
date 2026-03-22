@@ -1,4 +1,4 @@
-import { Subscriber } from "../entities/Subscriber";
+import { Subscriber } from "../Entities/Subscriber";
 
 export interface ISubscriberRepository {
   create(data: { pipelineId: string; url: string; type?: string }): Promise<Subscriber>;

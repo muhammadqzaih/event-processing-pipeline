@@ -1,8 +1,8 @@
 import { Queue } from "bullmq";
 import { injectable } from "tsyringe";
-import { config } from "../../config";
-import { IQueueService } from "../../application/contracts";
-import { AppError } from "../../common/AppError";
+import { config } from "../../Config";
+import { IQueueService } from "../../Application/Contracts";
+import { AppError } from "../../Common/AppError";
 
 @injectable()
 export class BullMQQueueService implements IQueueService {

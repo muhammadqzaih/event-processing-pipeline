@@ -1,6 +1,6 @@
 import { DependencyContainer, InjectionToken } from "tsyringe";
-import { IMediator, IRequestHandler } from "../contracts/IMediator";
-import { AppError } from "../../common/AppError";
+import { IMediator, IRequestHandler } from "../Contracts/IMediator";
+import { AppError } from "../../Common/AppError";
 
 
 type RequestConstructor = new (...args: any[]) => object;

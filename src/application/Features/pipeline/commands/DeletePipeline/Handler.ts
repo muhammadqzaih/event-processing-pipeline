@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { TOKENS } from "../../../../../domain/tokens";
-import { IPipelineRepository } from "../../../../../domain/repositories";
-import { AppError } from "../../../../../common/AppError";
+import { TOKENS } from "../../../../../Domain/tokens";
+import { IPipelineRepository } from "../../../../../Domain/Repositories";
+import { AppError } from "../../../../../Common/AppError";
 import { DeletePipelineCommand } from "./Command";
 
 

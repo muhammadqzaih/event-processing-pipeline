@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
-import { TOKENS } from "../../domain/tokens";
-import { IMediator } from "../../application/contracts";
-import { SubscriberMapper } from "../../application/Mappers/SubscriberMapper";
-import { sendCreated, sendNoContent,  sendOk } from "../common/http/response";
-import {ParamsBodyHandler, ParamsHandler, TypedHandler } from "../types/http";
-import { SubscriberResponse, CreateSubscriberRequest, UpdateSubscriberRequest } from "../../application/DTOs";
-import { Subscriber } from "../../domain/entities";
-import { CreateSubscriberCommand } from "../../application/Features/subscriber/commands/create-subscriber/Command";
-import { UpdateSubscriberCommand } from "../../application/Features/subscriber/commands/update-subscriber/Command";
-import { DeleteSubscriberCommand } from "../../application/Features/subscriber/commands/delete-subscriber/Command";
-import { GetSubscribersByPipelineIdQuery } from "../../application/Features/subscriber/queries/get-subscribers-by-pipeline-id/Query";
+import { TOKENS } from "../../Domain/tokens";
+import { IMediator } from "../../Application/Contracts";
+import { SubscriberMapper } from "../../Application/Mappers/SubscriberMapper";
+import { sendCreated, sendNoContent,  sendOk } from "../Common/http/response";
+import {ParamsBodyHandler, ParamsHandler, TypedHandler } from "../Common/http/http";
+import { SubscriberResponse, CreateSubscriberRequest, UpdateSubscriberRequest } from "../../Application/DTOs";
+import { Subscriber } from "../../Domain/Entities";
+import { CreateSubscriberCommand } from "../../Application/Features/subscriber/commands/CreateSubscriber/Command";
+import { UpdateSubscriberCommand } from "../../Application/Features/subscriber/commands/UpdateSubscriber/Command";
+import { DeleteSubscriberCommand } from "../../Application/Features/subscriber/commands/DeleteSubscriber/Command";
+import { GetSubscribersByPipelineIdQuery } from "../../Application/Features/subscriber/queries/GetSubscribersByPipelineId/Query";
 
 @injectable()
 export class SubscriberController {

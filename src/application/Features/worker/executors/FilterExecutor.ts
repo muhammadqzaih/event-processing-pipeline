@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IActionExecutor } from "../../../contracts/IActionExecutor";
+import { IActionExecutor } from "../../../Contracts/IActionExecutor";
 
 type FilterOperator = "eq" | "neq" | "gt" | "lt" | "gte" | "lte" | "contains";
 

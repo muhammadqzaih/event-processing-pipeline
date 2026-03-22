@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import { registerDependencies, container } from  "./di/container";
-import { TOKENS } from "./domain/tokens";
-import { IWorkerService } from "./application/contracts/IWorkerService";
-import { BullMQQueueService } from "./infrastructure/services/BullMQQueueService";
-import { disconnectPrisma } from "./infrastructure/database/prisma-client";
-import { createQueueWorkers } from "./infrastructure/worker/createQueueWorkers";
-import { setupWorkerEvents } from "./infrastructure/worker/setupWorkerEvents";
-import { setupWorkerShutdown } from "./infrastructure/worker/setupWorkerShutdown";
+import { registerDependencies, container } from  "./DI/container";
+import { TOKENS } from "./Domain/tokens";
+import { IWorkerService } from "./Application/Contracts/IWorkerService";
+import { BullMQQueueService } from "./Infrastructure/services/BullMQQueueService";
+import { disconnectPrisma } from "./Infrastructure/database/prisma-client";
+import { createQueueWorkers } from "./Infrastructure/worker/createQueueWorkers";
+import { setupWorkerEvents } from "./Infrastructure/worker/setupWorkerEvents";
+import { setupWorkerShutdown } from "./Infrastructure/worker/setupWorkerShutdown";
 
 
 async function startWorker(): Promise<void> {

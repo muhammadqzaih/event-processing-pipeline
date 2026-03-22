@@ -1,8 +1,8 @@
 import { injectable, inject } from "tsyringe";
 import { Prisma, PrismaClient } from "@prisma/client";
-import { TOKENS } from "../../domain/tokens";
-import { IActionRepository } from "../../domain/repositories";
-import { Action, ActionType } from "../../domain/entities";
+import { TOKENS } from "../../Domain/tokens";
+import { IActionRepository } from "../../Domain/Repositories";
+import { Action, ActionType } from "../../Domain/Entities";
 
 @injectable()
 export class PrismaActionRepository implements IActionRepository {

@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { SubscriberController } from "../controllers/SubscriberController";
-import { asyncHandlerMiddleware } from "../middleware/asyncHandlerMiddleware";
-import { validate } from "../middleware/validateMiddleware";
+import { SubscriberController } from "../Controllers/SubscriberController";
+import { asyncHandlerMiddleware } from "../Middleware/asyncHandlerMiddleware";
+import { validate } from "../Middleware/validateMiddleware";
 import {
   createSubscriberSchema,
   pipelineIdParamsSchema,
   subscriberIdParamsSchema,
   updateSubscriberSchema,
-} from "../validators/subscriberValidation";
+} from "../Validators/subscriberValidation";
 
 export function createSubscriberRouter(): Router {
   const router = Router();

@@ -1,17 +1,17 @@
 import { inject, injectAll, injectable } from "tsyringe";
 import { randomUUID } from "node:crypto";
-import { IActionRepository } from "../../../domain/repositories"; 
-import { IJobDeliveryRepository } from "../../../domain/repositories"; 
-import { IJobRepository } from "../../../domain/repositories"; 
-import { ISubscriberRepository } from "../../../domain/repositories"; 
-import { DeliveryStatus } from "../../../domain/entities";  
-import { TOKENS } from "../../../domain/tokens"; 
-import { IWorkerService } from "../../contracts/IWorkerService"; 
-import { AppError } from "../../../common/AppError"; 
-import { config } from "../../../config"; 
-import { IActionExecutor } from "../../contracts/IActionExecutor"; 
-import { DeliveryResult, IHttpClient } from "../../contracts/IHttpClient";
-import { IQueueService } from "../../contracts";
+import { IActionRepository } from "../../../Domain/Repositories"; 
+import { IJobDeliveryRepository } from "../../../Domain/Repositories"; 
+import { IJobRepository } from "../../../Domain/Repositories"; 
+import { ISubscriberRepository } from "../../../Domain/Repositories"; 
+import { DeliveryStatus } from "../../../Domain/Entities";  
+import { TOKENS } from "../../../Domain/tokens"; 
+import { IWorkerService } from "../../Contracts/IWorkerService"; 
+import { AppError } from "../../../Common/AppError"; 
+import { config } from "../../../Config"; 
+import { IActionExecutor } from "../../Contracts/IActionExecutor"; 
+import { DeliveryResult, IHttpClient } from "../../Contracts/IHttpClient";
+import { IQueueService } from "../../Contracts";
 
 @injectable()
 export class WorkerService implements IWorkerService {

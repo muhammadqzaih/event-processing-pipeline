@@ -1,6 +1,6 @@
 
-import { Job } from "../../domain/entities";
-import { JobDelivery } from "../../domain/entities";
+import { Job } from "../../Domain/Entities";
+import { JobDelivery } from "../../Domain/Entities";
 import { JobDeliveryResponse, JobDetailResponse, JobResponse } from "../DTOs";
 
 export class JobMapper {

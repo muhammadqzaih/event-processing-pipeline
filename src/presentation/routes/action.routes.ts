@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { ActionController } from "../controllers/ActionController";
-import { asyncHandlerMiddleware } from "../middleware/asyncHandlerMiddleware";
-import { validate } from "../middleware/validateMiddleware";
+import { ActionController } from "../Controllers/ActionController";
+import { asyncHandlerMiddleware } from "../Middleware/asyncHandlerMiddleware";
+import { validate } from "../Middleware/validateMiddleware";
 import {
 	actionIdParamsSchema,
 	createActionSchema,
 	updateActionSchema,
   pipelineIdParamsSchema
-} from "../validators/actionValidators";
+} from "../Validators/actionValidators";
 
 
 export function createActionRouter(): Router {

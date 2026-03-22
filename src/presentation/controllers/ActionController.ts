@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
-import { TOKENS } from "../../domain/tokens";
-import { IMediator } from "../../application/contracts";
-import { ActionMapper } from "../../application/Mappers/barrel";
-import { sendCreated, sendNoContent, sendOk } from "../common/http/response";
-import { ParamsBodyHandler, ParamsHandler, TypedHandler } from "../types/http";
-import { ActionResponse, CreateActionRequest, UpdateActionRequest } from "../../application/DTOs";
-import { Action } from "../../domain/entities";
-import { CreateActionCommand } from "../../application/Features/action/commands/create-action/Command";
-import { UpdateActionCommand } from "../../application/Features/action/commands/update-action/Command";
-import { DeleteActionCommand } from "../../application/Features/action/commands/delete-action/Command";
-import { GetActionsByPipelineIdQuery } from "../../application/Features/action/queries/get-actions-by-pipeline-id/Query";
+import { TOKENS } from "../../Domain/tokens";
+import { IMediator } from "../../Application/Contracts";
+import { ActionMapper } from "../../Application/Mappers/barrel";
+import { sendCreated, sendNoContent, sendOk } from "../Common/http/response";
+import { ParamsBodyHandler, ParamsHandler, TypedHandler } from "../Common/http/http";
+import { ActionResponse, CreateActionRequest, UpdateActionRequest } from "../../Application/DTOs";
+import { Action } from "../../Domain/Entities";
+import { CreateActionCommand } from "../../Application/Features/action/commands/CreateAction/Command";
+import { UpdateActionCommand } from "../../Application/Features/action/commands/UpdateAction/Command";
+import { DeleteActionCommand } from "../../Application/Features/action/commands/DeleteAction/Command";
+import { GetActionsByPipelineIdQuery } from "../../Application/Features/action/queries/GetActionsByPipelineId/Query";
 
 @injectable()
 export class ActionController {

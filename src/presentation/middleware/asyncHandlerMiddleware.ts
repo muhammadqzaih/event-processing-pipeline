@@ -1,5 +1,5 @@
 import { RequestHandler, NextFunction, Request, Response } from "express";
-import { TypedHandler } from "../types/http";
+import { TypedHandler } from "../Common/http/http";
 
 export function asyncHandlerMiddleware<
   TBody = unknown,
