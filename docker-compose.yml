@@ -7,6 +7,16 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: ${SA_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$${SA_PASSWORD}\" -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
     volumes:
       - sqlserver-data:/var/opt/mssql
     restart: unless-stopped
@@ -33,10 +43,10 @@ services:
     container_name: webhook-migrate
     env_file:
       - .env
-    command: npm run prisma:push
+    command: npm run db:deploy
     depends_on:
       sqlserver:
-        condition: service_started
+        condition: service_healthy
     restart: "no"
 
   api:
@@ -52,7 +62,7 @@ services:
       - "3000:3000"
     depends_on:
       sqlserver:
-        condition: service_started
+        condition: service_healthy
       redis:
         condition: service_healthy
       migrate:
@@ -70,7 +80,7 @@ services:
     command: npm run worker
     depends_on:
       sqlserver:
-        condition: service_started
+        condition: service_healthy
       redis:
         condition: service_healthy
       migrate:

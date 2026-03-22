@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { ZodTypeAny, ZodError } from "zod";
-import { AppError } from "../../shared/AppError";
+import { AppError } from "../../common/AppError";
 
 export function validate<
   TBody = any,

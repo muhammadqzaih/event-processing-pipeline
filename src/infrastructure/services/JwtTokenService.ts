@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { injectable } from "tsyringe";
 import { config } from "../../config";
-import { AppError } from "../../shared/AppError";
-import { ITokenService, TokenPayload } from "../../application/interfaces";
+import { AppError } from "../../common/AppError";
+import { ITokenService, TokenPayload } from "../../application/contracts";
 
 @injectable()
 export class JwtTokenService implements ITokenService {

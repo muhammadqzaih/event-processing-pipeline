@@ -1,5 +1,5 @@
 import { Subscriber } from "../../domain/entities";
-import { SubscriberResponse } from "../dtos";
+import { SubscriberResponse } from "../DTOs";
 
 export class SubscriberMapper {
   static toResponse(entity: Subscriber): SubscriberResponse {

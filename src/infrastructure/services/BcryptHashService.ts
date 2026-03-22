@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { injectable } from "tsyringe";
-import { IHashService } from "../../application/interfaces";
+import { IHashService } from "../../application/contracts";
 
 @injectable()
 export class BcryptHashService implements IHashService {

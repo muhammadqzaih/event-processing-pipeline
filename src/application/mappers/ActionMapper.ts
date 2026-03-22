@@ -1,5 +1,5 @@
 import { Action } from "../../domain/entities";
-import { ActionResponse } from "../dtos";
+import { ActionResponse } from "../DTOs";
 
 export class ActionMapper {
   static toResponse(entity: Action): ActionResponse {
