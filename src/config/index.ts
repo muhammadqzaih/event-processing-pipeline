@@ -27,6 +27,7 @@ export const config = {
   worker: {
     maxRetryAttempts: parseInt(process.env.MAX_RETRY_ATTEMPTS || '5', 10),
     retryDelayMs: parseInt(process.env.RETRY_DELAY_MS || '60000', 10),
+    deliveryConcurrency: parseInt(process.env.DELIVERY_CONCURRENCY || '10', 10),
   },
   servers: {
     url: `http://localhost:${process.env.PORT || 4000}`,

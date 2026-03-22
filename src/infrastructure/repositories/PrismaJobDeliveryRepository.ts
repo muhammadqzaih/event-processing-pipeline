@@ -41,6 +41,7 @@ export class PrismaJobDeliveryRepository implements IJobDeliveryRepository {
   }
 
   async create(data: {
+    id?: string;
     jobId: string;
     subscriberId: string;
     status?: DeliveryStatus;
@@ -51,6 +52,7 @@ export class PrismaJobDeliveryRepository implements IJobDeliveryRepository {
   }): Promise<JobDelivery> {
     const created = await this.prisma.jobDelivery.create({
       data: {
+        id: data.id,
         jobId: data.jobId,
         subscriberId: data.subscriberId,
         status: data.status ?? "pending",
@@ -62,6 +64,34 @@ export class PrismaJobDeliveryRepository implements IJobDeliveryRepository {
     });
 
     return this.toDomain(created);
+  }
+
+  async createMany(data: Array<{
+    id?: string;
+    jobId: string;
+    subscriberId: string;
+    status?: DeliveryStatus;
+    attemptCount?: number;
+    lastAttempt?: Date | null;
+    responseStatus?: number | null;
+    responseBody?: string | null;
+  }>): Promise<void> {
+    if (data.length === 0) {
+      return;
+    }
+
+    await this.prisma.jobDelivery.createMany({
+      data: data.map((item) => ({
+        id: item.id,
+        jobId: item.jobId,
+        subscriberId: item.subscriberId,
+        status: item.status ?? "pending",
+        attemptCount: item.attemptCount ?? 0,
+        lastAttempt: item.lastAttempt,
+        responseStatus: item.responseStatus,
+        responseBody: item.responseBody,
+      })),
+    });
   }
 
   async findByJobId(jobId: string): Promise<JobDelivery[]> {
