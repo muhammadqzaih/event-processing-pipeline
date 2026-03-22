@@ -1,5 +1,5 @@
 import { injectable, inject } from "tsyringe";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { TOKENS } from "../../domain/tokens";
 import { IActionRepository } from "../../domain/repositories";
 import { Action, ActionType } from "../../domain/entities";
@@ -30,22 +30,46 @@ export class PrismaActionRepository implements IActionRepository {
     };
   }
 
+  private isPipelineOrderUniqueConflict(error: unknown): boolean {
+    if (!(error instanceof Prisma.PrismaClientKnownRequestError)) {
+      return false;
+    }
+
+    if (error.code !== "P2002") {
+      return false;
+    }
+
+    const target = Array.isArray(error.meta?.target) ? error.meta.target : [];
+    return (
+      (target.includes("pipeline_id") || target.includes("pipelineId"))
+      && target.includes("order")
+    );
+  }
+
   async create(data: {
     pipelineId: string;
     type: string;
     config: Record<string, unknown>;
     order?: number;
-  }): Promise<Action> {
-    const created = await this.prisma.action.create({
-      data: {
-        pipelineId: data.pipelineId,
-        type: data.type,
-        config: JSON.stringify(data.config ?? {}),
-        order: data.order ?? 0,
-      },
-    });
+  }): Promise<Action | null> {
+    try {
+      const created = await this.prisma.action.create({
+        data: {
+          pipelineId: data.pipelineId,
+          type: data.type,
+          config: JSON.stringify(data.config ?? {}),
+          order: data.order ?? 0,
+        },
+      });
 
-    return this.toDomain(created);
+      return this.toDomain(created);
+    } catch (error) {
+      if (this.isPipelineOrderUniqueConflict(error)) {
+        return null;
+      }
+
+      throw error;
+    }
   }
 
   async findByPipelineId(pipelineId: string): Promise<Action[]> {
@@ -69,17 +93,25 @@ export class PrismaActionRepository implements IActionRepository {
       config?: Record<string, unknown>;
       order?: number;
     },
-  ): Promise<Action> {
-    const updated = await this.prisma.action.update({
-      where: { id },
-      data: {
-        type: data.type,
-        config: data.config !== undefined ? JSON.stringify(data.config) : undefined,
-        order: data.order,
-      },
-    });
+  ): Promise<Action | null> {
+    try {
+      const updated = await this.prisma.action.update({
+        where: { id },
+        data: {
+          type: data.type,
+          config: data.config !== undefined ? JSON.stringify(data.config) : undefined,
+          order: data.order,
+        },
+      });
 
-    return this.toDomain(updated);
+      return this.toDomain(updated);
+    } catch (error) {
+      if (this.isPipelineOrderUniqueConflict(error)) {
+        return null;
+      }
+
+      throw error;
+    }
   }
 
   async delete(id: string): Promise<void> {

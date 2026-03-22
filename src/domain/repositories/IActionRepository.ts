@@ -6,7 +6,7 @@ export interface IActionRepository {
 		type: string;
 		config: Record<string, unknown>;
 		order?: number;
-	}): Promise<Action>;
+	}): Promise<Action | null>;
 
 	findByPipelineId(pipelineId: string): Promise<Action[]>;
 	findById(id: string): Promise<Action | null>;
@@ -18,7 +18,7 @@ export interface IActionRepository {
 			config?: Record<string, unknown>;
 			order?: number;
 		}
-	): Promise<Action>;
+	): Promise<Action | null>;
 
 	delete(id: string): Promise<void>;
 	deleteByPipelineId(pipelineId: string): Promise<void>;
