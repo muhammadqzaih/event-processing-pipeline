@@ -66,7 +66,7 @@
 /**
  * @swagger
  * /subscribers/{id}:
-*   patch:
+ *   patch:
  *     summary: Update a subscriber by ID
  *     tags: [Subscribers]
  *     parameters:

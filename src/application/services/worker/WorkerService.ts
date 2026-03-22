@@ -1,4 +1,5 @@
 import { inject, injectAll, injectable } from "tsyringe";
+import { randomUUID } from "node:crypto";
 import { IActionRepository } from "../../../domain/repositories"; 
 import { IJobDeliveryRepository } from "../../../domain/repositories"; 
 import { IJobRepository } from "../../../domain/repositories"; 
@@ -71,16 +72,28 @@ export class WorkerService implements IWorkerService {
 
       const subscribers = await this.subscriberRepository.findByPipelineId(pipelineId);
 
-      for (const subscriber of subscribers) {
-        const delivery = await this.jobDeliveryRepository.create({
+      const deliveryPlans = subscribers.map((subscriber) => ({
+        subscriber,
+        deliveryId: randomUUID(),
+      }));
+
+      await this.jobDeliveryRepository.createMany(
+        deliveryPlans.map((plan) => ({
+          id: plan.deliveryId,
           jobId,
-          subscriberId: subscriber.id,
+          subscriberId: plan.subscriber.id,
           status: "pending",
           attemptCount: 0,
-        });
+        })),
+      );
 
-        const result = await this.httpClient.post(subscriber.url, currentPayload);
-        await this.handleDeliveryResult(delivery.id, result, 1);
+      const concurrency = Math.max(1, config.worker.deliveryConcurrency);
+      for (let index = 0; index < deliveryPlans.length; index += concurrency) {
+        const batch = deliveryPlans.slice(index, index + concurrency);
+        await Promise.all(batch.map(async (plan) => {
+          const result = await this.httpClient.post(plan.subscriber.url, currentPayload);
+          await this.handleDeliveryResult(plan.deliveryId, result, 1);
+        }));
       }
 
       await this.jobRepository.updateStatus(jobId, "completed", currentPayload);
@@ -165,7 +178,12 @@ export class WorkerService implements IWorkerService {
     attemptCount: number,
   ): Promise<void> {
     const isSuccess = result.success;
-    const status: DeliveryStatus = isSuccess ? "delivered" : "pending";
+    const maxAttemptsReached = attemptCount >= config.worker.maxRetryAttempts;
+    const status: DeliveryStatus = isSuccess
+      ? "delivered"
+      : maxAttemptsReached
+        ? "failed"
+        : "pending";
 
     await this.jobDeliveryRepository.updateStatus(deliveryId, {
       status,
@@ -184,13 +202,7 @@ export class WorkerService implements IWorkerService {
       return;
     }
 
-    if (attemptCount >= config.worker.maxRetryAttempts) {
-      await this.jobDeliveryRepository.updateStatus(deliveryId, {
-        status: "failed",
-        attemptCount,
-        lastAttempt: new Date(),
-        responseStatus: result.statusCode,
-      });
+    if (maxAttemptsReached) {
       return;
     }
 

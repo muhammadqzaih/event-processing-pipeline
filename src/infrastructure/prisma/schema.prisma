@@ -47,6 +47,7 @@ model Action {
   pipeline   Pipeline @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
 
   @@index([pipelineId])
+  @@unique([pipelineId, order])
   @@map("actions")
 }
 

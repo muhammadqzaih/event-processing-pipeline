@@ -23,32 +23,22 @@ export class ActionService implements IActionService {
 		}
 	}
 
-	private async ensureOrderUniqueInPipeline(
-		pipelineId: string,
-		order: number,
-		excludeActionId?: string,
-	): Promise<void> {
-		const actions = await this.actionRepository.findByPipelineId(pipelineId);
-		const hasConflict = actions.some(
-			(action) => action.order === order && action.id !== excludeActionId,
-		);
-
-		if (hasConflict) {
-			throw AppError.conflict("Action order already exists in this pipeline");
-		}
-	}
-
 	async create(data: CreateActionRequest, userId: string): Promise<Action> {
 		await this.ensurePipelineOwnedByUser(data.pipelineId, userId);
 		const targetOrder = data.order ?? 0;
-		await this.ensureOrderUniqueInPipeline(data.pipelineId, targetOrder);
 
-		return this.actionRepository.create({
+		const created = await this.actionRepository.create({
 			pipelineId: data.pipelineId,
 			type: data.type,
 			config: data.config,
 			order: targetOrder,
 		});
+
+		if (!created) {
+			throw AppError.conflict("Action order already exists in this pipeline");
+		}
+
+		return created;
 	}
 
 	async findByPipelineId(pipelineId: string, userId: string): Promise<Action[]> {
@@ -64,15 +54,17 @@ export class ActionService implements IActionService {
 
 		await this.ensurePipelineOwnedByUser(existing.pipelineId, userId);
 
-		if (data.order !== undefined) {
-			await this.ensureOrderUniqueInPipeline(existing.pipelineId, data.order, existing.id);
-		}
-
-		return this.actionRepository.update(id, {
+		const updated = await this.actionRepository.update(id, {
 			type: data.type,
 			config: data.config,
 			order: data.order,
 		});
+
+		if (!updated) {
+			throw AppError.conflict("Action order already exists in this pipeline");
+		}
+
+		return updated;
 	}
 
 	async delete(id: string, userId: string): Promise<void> {
