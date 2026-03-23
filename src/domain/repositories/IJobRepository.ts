@@ -1,5 +1,5 @@
-import { Job, JobStatus } from "../entities/Job";
-import { JobDelivery } from "../entities/JobDelivery";
+import { Job, JobStatus } from "../Entities/Job";
+import { JobDelivery } from "../Entities/JobDelivery";
 
 export interface IJobRepository {
   create(data: {

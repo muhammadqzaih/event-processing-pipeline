@@ -1,8 +1,8 @@
 import { injectable, inject } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
-import { TOKENS } from "../../domain/tokens";
-import { ISubscriberRepository } from "../../domain/repositories";
-import { Subscriber } from "../../domain/entities";
+import { TOKENS } from "../../Domain/tokens";
+import { ISubscriberRepository } from "../../Domain/Repositories";
+import { Subscriber } from "../../Domain/Entities";
 
 @injectable()
 export class PrismaSubscriberRepository implements ISubscriberRepository {

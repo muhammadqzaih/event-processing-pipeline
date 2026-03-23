@@ -1,4 +1,4 @@
-import { Action } from "../entities/Action";
+import { Action } from "../Entities/Action";
 
 export interface IActionRepository {
 	create(data: {

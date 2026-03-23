@@ -4,16 +4,6 @@ import { config } from '.';
 
 const projectRoot = process.cwd();
 
-const docsGlobs = [
-  path.join(projectRoot, 'src/presentation/docs/**/*.{ts,js}'),
-  path.join(projectRoot, 'dist/presentation/docs/**/*.js'),
-];
-
-const routesGlobs = [
-  path.join(projectRoot, 'src/presentation/routes/**/*.{ts,js}'),
-  path.join(projectRoot, 'dist/presentation/routes/**/*.js'),
-];
-
 const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
@@ -43,8 +33,8 @@ const options: swaggerJsdoc.Options = {
     ],
   },
   apis: [
-    ...routesGlobs,
-    ...docsGlobs,
+    path.join(projectRoot, 'src/presentation/Docs/**/*.ts'),
+    path.join(projectRoot, 'src/presentation/Routes/**/*.ts'),
   ],
 };
 
@@ -54,10 +44,11 @@ const generatedSpec = swaggerJsdoc(options) as {
 
 if (generatedSpec.paths) {
   const prefixedPaths = Object.fromEntries(
-    Object.entries(generatedSpec.paths).map(([path, value]) => {
-      const prefixedPath = path.startsWith(config.api.basePath) || path.startsWith('/api/')
-        ? path
-        : `${config.api.basePath}${path}`;
+    Object.entries(generatedSpec.paths).map(([routePath, value]) => {
+      const prefixedPath =
+        routePath.startsWith(config.api.basePath) || routePath.startsWith('/api/')
+          ? routePath
+          : `${config.api.basePath}${routePath}`;
 
       return [prefixedPath, value];
     }),

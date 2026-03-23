@@ -1,4 +1,4 @@
-import { Subscriber } from "../../domain/entities";
+import { Subscriber } from "../../Domain/Entities";
 import { SubscriberResponse } from "../DTOs";
 
 export class SubscriberMapper {

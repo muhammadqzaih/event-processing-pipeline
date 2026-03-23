@@ -1,4 +1,4 @@
-import { Pipeline } from "../entities/Pipeline";
+import { Pipeline } from "../Entities/Pipeline";
 
 export interface IPipelineRepository {
   create(data: { name: string; description: string | null; userId: string }): Promise<Pipeline>;

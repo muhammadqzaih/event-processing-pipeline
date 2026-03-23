@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IActionExecutor } from "../../../contracts/IActionExecutor";
+import { IActionExecutor } from "../../../Contracts/IActionExecutor";
 
 @injectable()
 export class TransformExecutor implements IActionExecutor {

@@ -1,18 +1,18 @@
 import { inject, injectable } from 'tsyringe';
-import { TOKENS } from '../../domain/tokens';
-import { IMediator } from '../../application/contracts';
-import { PipelineMapper } from '../../application/Mappers/barrel';
-import { sendCreated, sendNoContent, sendOk } from '../common/http/response';
-import { ParamsHandler, TypedHandler } from '../types/http';
+import { TOKENS } from '../../Domain/tokens';
+import { IMediator } from '../../Application/Contracts';
+import { PipelineMapper } from '../../Application/Mappers/barrel';
+import { sendCreated, sendNoContent, sendOk } from '../Common/http/response';
+import { ParamsHandler, TypedHandler } from '../Common/http/http';
 
-import { CreatePipelineCommand } from '../../application/Features/pipeline/commands/create-pipeline/Command';
-import { GetPipelinesQuery } from '../../application/Features/pipeline/queries/get-pipelines/Query';
-import { GetPipelineByIdQuery } from '../../application/Features/pipeline/queries/get-pipeline-by-id/Query';
-import { UpdatePipelineCommand } from '../../application/Features/pipeline/commands/update-pipeline/Command';
-import { DeletePipelineCommand } from '../../application/Features/pipeline/commands/delete-pipeline/Command';
-import { CreatePipelineRequest } from '../validators/pipelineValidators';
-import { Pipeline } from '../../domain/entities';
-import { PipelineResponse, UpdatePipelineRequest } from '../../application/DTOs';
+import { CreatePipelineCommand } from '../../Application/Features/pipeline/commands/CreatePipeline/Command';
+import { GetPipelinesQuery } from '../../Application/Features/pipeline/queries/GetPipelines/Query';
+import { GetPipelineByIdQuery } from '../../Application/Features/pipeline/queries/GetPipelineById/Query';
+import { UpdatePipelineCommand } from '../../Application/Features/pipeline/commands/UpdatePipeline/Command';
+import { DeletePipelineCommand } from '../../Application/Features/pipeline/commands/DeletePipeline/Command';
+import { CreatePipelineRequest } from '../Validators/pipelineValidators';
+import { Pipeline } from '../../Domain/Entities';
+import { PipelineResponse, UpdatePipelineRequest } from '../../Application/DTOs';
 
 
 @injectable()

@@ -1,4 +1,4 @@
-import { DeliveryStatus, JobDelivery } from "../entities/JobDelivery";
+import { DeliveryStatus, JobDelivery } from "../Entities/JobDelivery";
 
 
 export interface IJobDeliveryRepository {

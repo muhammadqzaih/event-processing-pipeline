@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware';
+import { errorHandlerMiddleware } from './Middleware/errorHandlerMiddleware';
 import swaggerUi from 'swagger-ui-express';
-import { swaggerSpec } from '../config/swagger';
-import { config } from '../config';
-import { createRouter } from './routes';
+import { swaggerSpec } from '../Config/swagger';
+import { config } from '../Config';
+import { createRouter } from './Routes';
 
 
 export function createApp(): express.Application {

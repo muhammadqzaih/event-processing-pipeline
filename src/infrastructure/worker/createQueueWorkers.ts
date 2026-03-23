@@ -1,5 +1,5 @@
 import { Worker } from "bullmq";
-import { IWorkerService } from "../../application/contracts/IWorkerService";
+import { IWorkerService } from "../../Application/Contracts/IWorkerService";
 import { BullMQQueueService } from "../services/BullMQQueueService"; 
 import { ProcessJobData, RetryDeliveryData } from "./types";
 

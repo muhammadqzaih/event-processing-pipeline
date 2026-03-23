@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 import { container } from "tsyringe";
-import { ITokenService } from "../../application/contracts";
-import { TOKENS } from "../../domain/tokens";
-import { AppError } from "../../common/AppError";
+import { ITokenService } from "../../Application/Contracts";
+import { TOKENS } from "../../Domain/tokens";
+import { AppError } from "../../Common/AppError";
 
 export const authMiddleware: RequestHandler = (req, _res, next) => {
   const authHeader = req.headers.authorization;

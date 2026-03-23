@@ -1,4 +1,4 @@
-import { Pipeline } from "../../domain/entities";
+import { Pipeline } from "../../Domain/Entities";
 import { CreatePipelineRequest, PipelineResponse } from "../DTOs";
 
 export class PipelineMapper {

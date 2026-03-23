@@ -1,4 +1,4 @@
-import { Action } from "../../domain/entities";
+import { Action } from "../../Domain/Entities";
 import { ActionResponse } from "../DTOs";
 
 export class ActionMapper {

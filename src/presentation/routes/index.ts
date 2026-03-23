@@ -5,7 +5,7 @@ import { createSubscriberRouter } from "./subscriber.routes";
 import { createWebhookRouter } from "./webhook.routes";
 import { createJobRouter } from "./job.routes";
 import { createAuthRouter } from "./auth.routes";
-import { authMiddleware } from "../middleware/authMiddleware";
+import { authMiddleware } from "../Middleware/authMiddleware";
 
 export function createRouter():Router{
   const router = Router();

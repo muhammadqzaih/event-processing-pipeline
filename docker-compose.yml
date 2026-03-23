@@ -2,64 +2,58 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: webhook-sqlserver
+    environment:
+      SA_PASSWORD: "${SA_PASSWORD}"
+      ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: ${SA_PASSWORD}
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: unless-stopped
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$${SA_PASSWORD}\" -Q \"SELECT 1\" || exit 1",
-        ]
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $${SA_PASSWORD} -C -Q 'SELECT 1'"]
       interval: 10s
       timeout: 5s
-      retries: 20
-      start_period: 20s
-    volumes:
-      - sqlserver-data:/var/opt/mssql
-    restart: unless-stopped
+      retries: 15
+    deploy:
+      resources:
+        limits:
+          memory: 2g
 
   redis:
     image: redis:7-alpine
     container_name: webhook-redis
     ports:
       - "6379:6379"
-    volumes:
-      - redis-data:/data
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 10
-    restart: unless-stopped
+      interval: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 256m
 
   migrate:
     build:
       context: .
-      dockerfile: Dockerfile
-      target: build
-    container_name: webhook-migrate
+      target: migrate
     env_file:
       - .env
-    command: npm run db:deploy
     depends_on:
       sqlserver:
         condition: service_healthy
-    restart: "no"
+    restart: "on-failure"
 
   api:
     build:
       context: .
-      dockerfile: Dockerfile
       target: api
-    container_name: webhook-api
-    env_file:
-      - .env
-    command: npm run start
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     depends_on:
       sqlserver:
         condition: service_healthy
@@ -68,16 +62,17 @@ services:
       migrate:
         condition: service_completed_successfully
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512m
 
   worker:
     build:
       context: .
-      dockerfile: Dockerfile
       target: worker
-    container_name: webhook-worker
     env_file:
       - .env
-    command: npm run worker
     depends_on:
       sqlserver:
         condition: service_healthy
@@ -86,7 +81,10 @@ services:
       migrate:
         condition: service_completed_successfully
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512m
 
 volumes:
-  sqlserver-data:
-  redis-data:
+  sqlserver_data:

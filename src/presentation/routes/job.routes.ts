@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { JobController } from "../controllers/JobController";
-import { asyncHandlerMiddleware } from "../middleware/asyncHandlerMiddleware";
-import { validate } from "../middleware/validateMiddleware";
-import { jobIdParamsSchema, pipelineIdParamsSchema } from "../validators/jobValidators";
+import { JobController } from "../Controllers/JobController";
+import { asyncHandlerMiddleware } from "../Middleware/asyncHandlerMiddleware";
+import { validate } from "../Middleware/validateMiddleware";
+import { jobIdParamsSchema, pipelineIdParamsSchema } from "../Validators/jobValidators";
 
 export function createJobRouter(): Router {
   const router = Router();

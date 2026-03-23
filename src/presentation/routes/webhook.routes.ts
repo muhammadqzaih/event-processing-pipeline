@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { validate } from "../middleware/validateMiddleware";
-import { asyncHandlerMiddleware } from "../middleware/asyncHandlerMiddleware";
-import { pipelineIdParamsSchema } from "../validators/pipelineValidators";
-import { WebhookController } from "../controllers/WebhookController";
+import { validate } from "../Middleware/validateMiddleware";
+import { asyncHandlerMiddleware } from "../Middleware/asyncHandlerMiddleware";
+import { pipelineIdParamsSchema } from "../Validators/pipelineValidators";
+import { WebhookController } from "../Controllers/WebhookController";
 
 export function createWebhookRouter(): Router {
   const router = Router();

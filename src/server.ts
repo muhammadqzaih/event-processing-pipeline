@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { createApp } from './presentation/app';
-import { registerDependencies } from './di/container';
-import { disconnectPrisma } from './infrastructure/database/prisma-client';
-import { config } from './config';
+import { registerDependencies } from './DI/container';
+import { disconnectPrisma } from './Infrastructure/database/prisma-client';
+import { config } from './Config';
 
 
 async function start() {
