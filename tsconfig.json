@@ -6,12 +6,14 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
+    "types": ["node"],      
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "removeComments": false
   },
   "include": ["src/**/*"],
   "exclude": [
