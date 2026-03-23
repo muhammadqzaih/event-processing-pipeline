@@ -53,6 +53,7 @@ jobs:
             IMAGE_API=${{ env.IMAGE_API }}:${{ github.event.workflow_run.head_sha }}
             IMAGE_WORKER=${{ env.IMAGE_WORKER }}:${{ github.event.workflow_run.head_sha }}
             IMAGE_MIGRATE=${{ env.IMAGE_MIGRATE }}:${{ github.event.workflow_run.head_sha }}
+            SERVER_URL=${{ secrets.SERVER_URL }}
             EOF
 
             docker compose -f docker-compose.prod.yml pull
