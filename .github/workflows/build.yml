@@ -7,10 +7,10 @@ on:
     branches: [main]
 
 env:
-  IMAGE_API: ${{ secrets.DOCKER_USERNAME }}/webhook-pipeline-api
-  IMAGE_WORKER: ${{ secrets.DOCKER_USERNAME }}/webhook-pipeline-worker
-  IMAGE_MIGRATE: ${{ secrets.DOCKER_USERNAME }}/webhook-pipeline-migrate
-
+  IMAGE_API: muhammadqzih33/webhook-pipeline-api
+  IMAGE_WORKER: muhammadqzih33/webhook-pipeline-worker
+  IMAGE_MIGRATE: muhammadqzih33/webhook-pipeline-migrate
+  
 jobs:
   build:
     name: Build & Push Images
