@@ -30,7 +30,7 @@ export const config = {
     deliveryConcurrency: parseInt(process.env.DELIVERY_CONCURRENCY || '10', 10),
   },
   servers: {
-    url: `http://localhost:${process.env.PORT || 4000}`,
+    url: process.env.SERVER_URL || `http://localhost:${process.env.PORT || 3000}`,
   },
 
 } as const;
