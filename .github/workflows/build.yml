@@ -1,0 +1,66 @@
+name: CI - Build & Push
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  IMAGE_API: muhammadqzih33/webhook-pipeline-api
+  IMAGE_WORKER: muhammadqzih33/webhook-pipeline-worker
+  IMAGE_MIGRATE: muhammadqzih33/webhook-pipeline-migrate
+  
+jobs:
+  build:
+    name: Build & Push Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & Push API image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: api
+          push: ${{ github.event_name == 'push' }}
+          tags: |
+            ${{ env.IMAGE_API }}:latest
+            ${{ env.IMAGE_API }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build & Push Worker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: worker
+          push: ${{ github.event_name == 'push' }}
+          tags: |
+            ${{ env.IMAGE_WORKER }}:latest
+            ${{ env.IMAGE_WORKER }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build & Push Migrate image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: migrate
+          push: ${{ github.event_name == 'push' }}
+          tags: |
+            ${{ env.IMAGE_MIGRATE }}:latest
+            ${{ env.IMAGE_MIGRATE }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

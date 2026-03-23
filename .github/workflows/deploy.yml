@@ -1,0 +1,61 @@
+name: CD - Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI - Build & Push"]
+    types: [completed]
+    branches: [main]
+
+env:
+  IMAGE_API: muhammadqzih33/webhook-pipeline-api
+  IMAGE_WORKER: muhammadqzih33/webhook-pipeline-worker
+  IMAGE_MIGRATE: muhammadqzih33/webhook-pipeline-migrate
+  
+jobs:
+  deploy:
+    name: Deploy to Azure VM
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy docker-compose.prod.yml to VM
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          source: "docker-compose.prod.yml"
+          target: "/home/azureuser/app"
+
+      - name: Deploy on VM
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            cd /home/azureuser/app
+
+            cat > .env << EOF
+            PORT=3000
+            NODE_ENV=production
+            SA_PASSWORD=${{ secrets.SA_PASSWORD }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            REDIS_HOST=${{ secrets.REDIS_HOST }}
+            REDIS_PORT=${{ secrets.REDIS_PORT }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}
+            MAX_RETRY_ATTEMPTS=${{ secrets.MAX_RETRY_ATTEMPTS }}
+            RETRY_DELAY_MS=${{ secrets.RETRY_DELAY_MS }}
+            IMAGE_API=${{ env.IMAGE_API }}:${{ github.event.workflow_run.head_sha }}
+            IMAGE_WORKER=${{ env.IMAGE_WORKER }}:${{ github.event.workflow_run.head_sha }}
+            IMAGE_MIGRATE=${{ env.IMAGE_MIGRATE }}:${{ github.event.workflow_run.head_sha }}
+            EOF
+
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml down
+            docker compose -f docker-compose.prod.yml up -d
+            docker image prune -f
