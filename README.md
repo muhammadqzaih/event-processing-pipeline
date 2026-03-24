@@ -166,8 +166,9 @@ The Domain layer defines the core business contracts — entities and repository
 
 ## Database Schema
 
-<!-- Add your database schema image here -->
-![Database Schema](./docs/database-schema.png)
+
+<img width="986" height="826" alt="image" src="https://github.com/user-attachments/assets/35750959-fd96-488d-bd83-bd1f3a064d88" />
+
 
 Key relationships:
 
@@ -327,10 +328,10 @@ Local: [http://localhost:3000/docs](http://localhost:3000/docs)
 Production: [http://20.199.168.229:3000/docs](http://20.199.168.229:3000/docs)
 
 <!-- Add your Swagger UI screenshot here -->
-![Swagger UI](./docs/swagger-screenshot.png)
+## Swagger UI:
+<img width="1058" height="938" alt="image" src="https://github.com/user-attachments/assets/ce363069-3949-49ad-8047-d53ddf74dea9" />
 
-<!-- Add your Swagger endpoints screenshot here -->
-![API Endpoints](./docs/swagger-endpoints.png)
+
 
 ### Endpoint Summary
 
