@@ -34,37 +34,6 @@ Live API: [http://20.199.168.229:3000/docs](http://20.199.168.229:3000/docs)
 - API Versioning — All endpoints versioned under `/api/v1` to prevent breaking client integrations
 - Swagger Docs — Auto-generated, interactive API documentation
 - Dockerized — Full containerized setup for local development and production
-
----
-
-## Architecture
-
-This project draws ideas from both Clean Architecture and Feature Architecture — not a strict implementation of either, but a deliberate blend of both. From Clean Architecture it takes the concept of layered separation, where each layer has a clear responsibility and dependencies only flow inward — the Domain knows nothing about the outside world, and the Infrastructure knows nothing about business rules. 
-
-```
-+---------------------------------------------------+
-|                  Presentation                     |
-|    Controllers · Routes · Middleware · Docs       |
-|             Validators · Common                   |
-+---------------------------------------------------+
-|                  Application                      |
-|    Features (CQRS) · DTOs · Mappers · Mediator    |
-|          Contracts · Common (AppError)            |
-+---------------------------------------------------+
-|                    Domain                         |
-|         Entities · Repositories · tokens          |
-+---------------------------------------------------+
-|                Infrastructure                     |
-|  database · prisma · repositories · services      |
-|                    worker                         |
-+---------------------------------------------------+
-|               Cross-cutting                       |
-|    Config (index · swagger) · DI (container)      |
-+---------------------------------------------------+
-```
-
-The Domain layer defines the core business contracts — entities and repository interfaces — with zero knowledge of how they are implemented. The Infrastructure layer provides the concrete implementations behind those interfaces, meaning the business logic never depends on Prisma, BullMQ, or any external technology directly. Swapping the database or the queue is a matter of writing a new implementation file, not touching a single line of business logic.
-
 ---
 
 ## Design Decisions
@@ -139,6 +108,18 @@ The Domain layer defines the core business contracts — entities and repository
 - API documentation is auto-generated from JSDoc annotations on route files — always in sync with the actual code
 - No separate documentation file to maintain, no risk of docs going stale
 - The Swagger UI is served directly from the API server at `/docs`
+
+
+---
+
+## Architecture
+
+This project draws ideas from both Clean Architecture and Feature Architecture — not a strict implementation of either, but a deliberate blend of both. From Clean Architecture it takes the concept of layered separation, where each layer has a clear responsibility and dependencies only flow inward — the Domain knows nothing about the outside world, and the Infrastructure knows nothing about business rules. 
+
+<img width="1410" height="2240" alt="image" src="https://github.com/user-attachments/assets/8b045c8d-f43b-401a-8a1b-1fcc78186aa3" />
+
+
+The Domain layer defines the core business contracts — entities and repository interfaces — with zero knowledge of how they are implemented. The Infrastructure layer provides the concrete implementations behind those interfaces, meaning the business logic never depends on Prisma, BullMQ, or any external technology directly. Swapping the database or the queue is a matter of writing a new implementation file, not touching a single line of business logic.
 
 ---
 
